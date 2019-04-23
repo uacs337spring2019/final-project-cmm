@@ -34,7 +34,7 @@ Description: node.js service for chatit.js
 
         if (request.query.type === "getSpin") {
             console.log("GET : getSpin request received");
-            response.send(currentSpinEnd.toString());
+            response.send(currentSpinEnd - new Date());
         }
 
 

@@ -4,7 +4,7 @@
 
     let activeSingleBets = [];
     let activeCategoryBets = [];
-    let currentSpinExpiration;
+    let timeLeft;
     let balance = 5;
     let spinTimer;
     let username;
@@ -30,7 +30,7 @@
         fetch(url)
             .then(checkStatus)
             .then(function(response){
-                currentSpinExpiration = new Date(response);
+                timeLeft = response;
                 console.log(response);
                 spinTimer = setInterval(spinTimerTick, 1000);
             });
@@ -38,7 +38,6 @@
 
     /** Called when spin timer timeout happens**/
     function spinTimerTick() {
-        let timeLeft = currentSpinExpiration - new Date();
         console.log(timeLeft);
         if (timeLeft < 0) {
             // Current Spin has officially ended taking in bets
@@ -50,7 +49,7 @@
             // 3) send a GET to get spin results from service
             setTimeout(startSpin, 12000);
         }
-        updateTimer(timeLeft);
+        updateTimer();
     }
 
     function stopTimer() {
@@ -131,7 +130,7 @@
     }
 
 
-    function updateTimer(timeLeft) {
+    function updateTimer() {
         let spinDiv = document.getElementById("current-spin-div");
         let timerP = document.createElement("p");
         spinDiv.innerHTML = "";

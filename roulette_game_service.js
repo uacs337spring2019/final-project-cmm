@@ -25,11 +25,16 @@ Description: node.js service for chatit.js
 
     app.get('/', function (request, response) {
         // GET request to service
+        if(request.query === {}){
+            response.sendFile("roulette_game.html");
+        }
 
         if (request.query.type === "getSpin") {
             console.log("GET : getSpin request received");
+            response.send(currentSpinEnd.toString());
         }
-        response.send(currentSpinEnd.toString());
+
+        
 
     });
 
@@ -174,7 +179,6 @@ Description: node.js service for chatit.js
             if (name === currentWinningVal) {
                 balance += (amount * 36);
             }
-        }
         console.log(balance);
         return balance;
     }

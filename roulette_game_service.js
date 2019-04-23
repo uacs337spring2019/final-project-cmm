@@ -25,7 +25,7 @@ Description: node.js service for chatit.js
 
     app.get('/', function (request, response) {
         // GET request to service
-        if(request.query === {}){
+        if (request.query === {}) {
             response.sendFile("roulette_game.html");
         }
 
@@ -34,7 +34,7 @@ Description: node.js service for chatit.js
             response.send(currentSpinEnd.toString());
         }
 
-        
+
 
     });
 
@@ -55,7 +55,7 @@ Description: node.js service for chatit.js
                 spinVal: currentWinningVal
             }));
         }
-        
+
     });
 
     let currentWinningVal;
@@ -111,7 +111,7 @@ Description: node.js service for chatit.js
                     }
                     break;
                 case "RED":
-                    let redNums = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]
+                    let redNums = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]
                     for (let j = 0; j < redNums.length; j++) {
                         if (redNums[j].toString() === currentWinningVal) {
                             console.log("RED");
@@ -120,7 +120,7 @@ Description: node.js service for chatit.js
                     }
                     break;
                 case "BLACK":
-                    let blackNums = [2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35];
+                    let blackNums = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35];
                     for (let j = 0; j < blackNums.length; j++) {
                         if (blackNums[j].toString() === currentWinningVal) {
                             balance += (amount * 2);
@@ -179,10 +179,10 @@ Description: node.js service for chatit.js
             if (name === currentWinningVal) {
                 balance += (amount * 36);
             }
-        console.log(balance);
-        return balance;
+            console.log(balance);
+            return balance;
+        }
+
     }
-
-
     app.listen(process.env.PORT);
 })();

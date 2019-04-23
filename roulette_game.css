@@ -1,0 +1,68 @@
+html, body{
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#game-board-div{
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+#left-main-div,
+#right-main-div{
+    display: flex;
+    flex-direction: column;
+    width: 7%;
+    max-height: 60%;
+}
+#middle-main-div{
+    display: flex;
+    flex-direction: column;
+    width: 84%;
+}
+
+#red-black-bets{
+    display: flex;
+    flex-direction: column;
+}
+
+#red-black-bets > div,
+#twelve-bets,
+#category-bets{
+    display: flex;
+    flex-direction: row;
+}
+
+.betting-square{
+    width: 100%;
+    color: white;
+    text-align: center;
+    border: 1px solid white;
+}
+
+.red{
+    background-color: red;
+}
+
+.black{
+    background-color: black;
+}
+
+.green{
+    background-color: green;
+}
+
+#active-bets-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+#active-bets-div div{
+    display: flex;
+    flex-direction: column;
+}

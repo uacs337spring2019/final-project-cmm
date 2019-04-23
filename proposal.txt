@@ -1,0 +1,34 @@
+CSC 337 - Final Project Proposal
+Team (solo) : Christopher Metz
+
+I will be creating a individual/multiplayer simplified roulette game. The application will simulate a simplified version of a roulette game every 30 seconds and will accept user "bets" until the spin expires. Upon spin expiration, all user's bets are processed and the next roulette spin will begin. Each user will be able to see the username and winnings of all players that are currently logged in on a leaderboard to the side. There will be a button to obtain more credits if the user has a balance of 0. This button should do nothing if the user has a balance. When a user reaches the website, it will ask them for a username. If the username exists in the database, their username and balance is retrieved, if it does not exist, a new user is created and a default balance is set for the user. These two values are added to the database and sent to the user's page as well. I will not handle passwords for this assignment, and will assume each username is unique. After 5 spins with no activity, the user will be signed out and the username will then be available for login.
+
+-When a user reaches my website, it will ask for a username to use. Their javascript will send a GET request to see if their username is available for login. 
+-The server will check the table for users and check at the logged-in field and reply to the user if their specified username is available for login. 
+	-If the server reply says that the user is available for login or that user does not exist
+		The user will send a POST request to the server to log in the specified username
+	-If the server reply says the user is unavailable
+		the user is notified that the specified username is in use. 
+-The server will receive the POST for user log-in and find/create a record in the username table in the database.
+	-If the server is creating a new username for the user 
+		it will set their balance to a default 10 credit amount. 
+	-If the server finds the username in the username table
+		It will grab their balance from their username table
+	Both processes will set the signed-in field to true
+	Both processes will reply to the user their balance and a log-in success message
+-The user will receive their balance and log-in success message
+-The user will send a GET to the server to get the leaderboard
+	The server will receive this GET request, and lookup all logged in users and their balances
+	The server will reply with an ordered list of logged in users based on balance
+		will not send user other user's balance, but will show highest to lowest in order
+-The user will receive this list of users/balances and update their leaderboard
+-The user will send a GET to the server to get the current spin information
+	The server will receive this GET, and reply with the current time left in spin and spin ID
+-The user will receive reply of time left in spin and create a JS timer showing spin countdown
+-If user places a "bet", a POST will go to server specifying their bet # and amount and their spin ID
+	The server will check that spin ID matches current spin, and log their bet into database
+-at end of current spin, server will process all bets and update database accordingly
+-at end of JS timer, user will send GET to see their new balance as well as new leaderboard
+-User will then do another GET request to get current spin information
+
+

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Chris's Roulette Extravaganza</title>
+    <script src="./roulette_game.js"></script>
+    <link rel="stylesheet" type="text/css" href="./roulette_game.css">
+</head>
+
+<body>
+    <h1>Chris's Roulette Extravaganza</h1>
+    <h2>Current Spin Information</h2>
+    <div id="current-spin-div">
+        <p>0:00</p>
+    </div>
+    <h2>Click on single squares to register $1 bet (In-between betting is not allowed)</h2>
+    <div id="game-board-div">
+        <div id="left-main-div">
+            <div class="betting-square single-bet green">
+                <p>00</p>
+            </div>
+            <div class="betting-square single-bet green">
+                <p>0</p>
+            </div>
+        </div>
+        <div id="middle-main-div">
+            <div id="red-black-bets">
+                <div>
+                    <div class="betting-square single-bet red">
+                        <p>3</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>6</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>9</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>12</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>15</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>18</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>21</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>24</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>27</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>30</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>33</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>36</p>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="betting-square single-bet black">
+                        <p>2</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>5</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>8</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>11</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>14</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>17</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>20</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>23</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>26</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>29</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>32</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>35</p>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="betting-square single-bet red">
+                        <p>1</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>4</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>7</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>10</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>13</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>16</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>19</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>22</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>25</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>28</p>
+                    </div>
+                    <div class="betting-square single-bet black">
+                        <p>31</p>
+                    </div>
+                    <div class="betting-square single-bet red">
+                        <p>34</p>
+                    </div>
+                </div>
+            </div>
+            <div id="twelve-bets">
+                <div class="betting-square category-bet green">
+                    <p>1st 12</p>
+                </div>
+                <div class="betting-square category-bet green">
+                    <p>2nd 12</p>
+                </div>
+                <div class="betting-square category-bet green">
+                    <p>3rd 12</p>
+                </div>
+            </div>
+            <div id="category-bets">
+                <div class="betting-square category-bet green">
+                    <p>1 to 18</p>
+                </div>
+                <div class="betting-square category-bet green">
+                    <p>EVEN</p>
+                </div>
+                <div class="betting-square category-bet green">
+                    <p>RED</p>
+                </div>
+                <div class="betting-square category-bet green">
+                    <p>BLACK</p>
+                </div>
+                <div class="betting-square category-bet green">
+                    <p>ODD</p>
+                </div>
+                <div class="betting-square category-bet green">
+                    <p>19 to 36</p>
+                </div>
+            </div>
+        </div>
+        <div id="right-main-div">
+            <div id="row-1" class="betting-square category-bet green">
+                <p>2 to 1</p>
+            </div>
+            <div id="row-2" class="betting-square category-bet green">
+                <p>2 to 1</p>
+            </div>
+            <div id="row-3" class="betting-square category-bet green">
+                <p>2 to 1</p>
+            </div>
+        </div>
+    </div>
+    <h2>Balance</h2>
+    <div id="balance-div">
+            
+    </div>
+    <div id="active-bets-div">
+        
+        <div id="active-single-bets-div">
+            <h3>Single Number Bets</h3>
+        </div>
+        
+        <div id="active-category-bets-div">
+            <h3>Category Bets</h3>
+        </div>
+    </div>
+</body>
+
+</html>

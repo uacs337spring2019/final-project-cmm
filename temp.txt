@@ -1,0 +1,99 @@
+/** Function called after timer runs out locally **/
+    function calculateBetWins(winningValue) {
+        let name, amount, result;
+        let staked = 0;
+        let initialBalance = balance;
+        for (let i = 0; i < activeCategoryBets.length; i++) {
+            name = activeCategoryBets[i].name;
+            amount = activeCategoryBets[i].amount;
+            staked += amount;
+            switch (name) {
+                case "1 to 18":
+                    if (winningValue > 0 && winningValue < 19) {
+                        balance += (amount * 2);
+                    }
+                    break;
+                case "EVEN":
+                    if (winningValue % 2 === 0) {
+                        balance += (amount * 2);
+                    }
+                    break;
+                case "RED":
+                    let redNums = document.getElementsByClassName("red");
+                    for (let j = 0; j < redNums.length; j++) {
+                        if (redNums[j].children[0].innerHTML === winningValue) {
+                            balance += (amount * 2);
+                        }
+                    }
+                    break;
+                case "BLACK":
+                    let blackNums = document.getElementsByClassName("black");
+                    for (let j = 0; j < blackNums.length; j++) {
+                        if (blackNums[j].children[0].innerHTML === winningValue) {
+                            balance += (amount * 2);
+                        }
+                    }
+                    break;
+                case "ODD":
+                    if (winningValue % 2 === 1) {
+                        balance += (amount * 2);
+                    }
+                    break;
+                case "19 to 36":
+                    if (winningValue > 18 && winningValue < 36) {
+                        balance += (amount * 2);
+                    }
+                    break;
+                case "2 to 1 row-1":
+                    if (winningValue > 0 && winningValue % 3 === 0) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "2 to 1 row-2":
+                    if (winningValue + 1 % 3 === 0) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "2 to 1 row-3":
+                    if (winningValue + 2 % 3 === 0) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "1st 12":
+                    if (winningValue > 0 && winningValue < 13) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "2nd 12":
+                    if (winningValue > 12 && winningValue < 25) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "3rd 12":
+                    if (winningValue > 24 && winningValue < 37) {
+                        balance += (amount * 3);
+                    }
+                    break;
+
+                default:
+                    console.log("Unknown switch on category bets");
+            }
+        }
+        for (let i = 0; i < activeSingleBets.length; i++) {
+            name = activeSingleBets[i].name;
+            amount = activeSingleBets[i].amount;
+            staked += amount;
+            if (name === winningValue) {
+                balance += (amount * 36);
+            }
+        }
+        if (staked === 0) {
+            result = null;
+        } else {
+            result = (balance - initialBalance) - staked;
+        }
+
+        activeCategoryBets = [];
+        activeSingleBets = [];
+        displayBets(result);
+    }

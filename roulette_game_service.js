@@ -26,7 +26,7 @@ Description: node.js service for chatit.js
     app.get('/', function (request, response) {
         // GET request to service
         if (request.query === {}) {
-            response.sendFile("roulette_game.html");
+            response.render("./roulette_game.html");
         }
 
         if (request.query.type === "getSpin") {

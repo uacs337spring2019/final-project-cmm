@@ -2,7 +2,7 @@
   "name": "final-project-cmm",
   "version": "1.0.0",
   "description": "CSC 337 Final Project - Roulette Extravaganza - Christopher Metz",
-  "main": "roulette_game.html",
+  "main": "roulette_game_service.js",
   "dependencies": {
     "client-sessions": "^0.8.0",
     "cookie-parser": "^1.4.4",

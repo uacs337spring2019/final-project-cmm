@@ -22,13 +22,14 @@ Description: node.js service for chatit.js
             "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
-
+    
     app.get('/', function (request, response) {
         // GET request to service
         console.log(request.query);
         if (request.query.type === undefined) {
             console.log("rendering HTML");
             app.use(express.static("public"));
+            response.sendFile("/app/public/roulette_game.html");
         }
 
         if (request.query.type === "getSpin") {

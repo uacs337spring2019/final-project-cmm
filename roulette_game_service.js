@@ -28,7 +28,7 @@ Description: node.js service for chatit.js
         console.log(request.query);
         if (request.query) {
             console.log("rendering HTML");
-            response.render("./roulette_game.html");
+            response.render("roulette_game");
         }
 
         if (request.query.type === "getSpin") {

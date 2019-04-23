@@ -6,10 +6,8 @@
     let activeCategoryBets = [];
     let currentSpinExpiration;
     let balance = 5;
-    let staked = 0;
     let spinTimer;
     let username;
-    let spinID;
 
     window.onload = function () {
         // 1) Show login page
@@ -27,7 +25,7 @@
 
     function startSpin(){
         // send a GET to service asking for current spin
-        let url = "http://localhost:3000?";
+        let url = "https://roulette-extravaganza.herokuapp.com/" + process.env.PORT + "?";
         url += "type=getSpin";
         fetch(url)
             .then(checkStatus)
@@ -62,7 +60,7 @@
     function sendBets() {
         // Function will compile a json object to send to the server
         // Which contains username, balance, single number bets, category bets,
-        let url = "http://localhost:3000";
+        let url = "https://roulette-extravaganza.herokuapp.com/?";
         let sendingJSON = {
             type: "bets",
             userID: username,

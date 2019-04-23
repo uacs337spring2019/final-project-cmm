@@ -25,7 +25,7 @@
 
     function startSpin(){
         // send a GET to service asking for current spin
-        let url = "https://roulette-extravaganza.herokuapp.com/" + process.env.PORT + "?";
+        let url = "https://roulette-extravaganza.herokuapp.com/?";
         url += "type=getSpin";
         fetch(url)
             .then(checkStatus)

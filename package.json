@@ -4,7 +4,7 @@
   "description": "CSC 337 - Multiplayer Roulette Service",
   "main": "roulette_game.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node roulette_game_service.js"
   },
   "repository": {
     "type": "git",

@@ -66,3 +66,9 @@ html, body{
     display: flex;
     flex-direction: column;
 }
+
+
+div.highlighted{
+    background-color: yellow;
+    color: black;
+}

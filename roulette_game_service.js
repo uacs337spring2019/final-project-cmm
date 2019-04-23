@@ -25,11 +25,12 @@ Description: node.js service for chatit.js
 
     app.get('/', function (request, response) {
         // GET request to service
-        // requesting service is trying to GET all
-        // chat messages that are stored in messages.txt
-        let fileText = getChatMessages();
-        console.log("GET request received");
-        response.send("GET response");
+
+        if (request.query.type === "getSpin") {
+            console.log("GET : getSpin request received");
+        }
+        response.send(currentSpinEnd.toString());
+
     });
 
     app.post('/', jsonParser, function (request, response) {
@@ -40,38 +41,144 @@ Description: node.js service for chatit.js
         console.log("POST received");
         console.log("type = " + request.body.type);
         console.log("userID = " + request.body.userID);
-        processBets
-        response.send(JSON.stringify({
-            type: "bet-response",
-            userID: request.body.userID,
-            balance: request.body.balance
-        }));
+        if (request.body.type === "bets") {
+            let newBalance = processBets(request.body.singleNumberBets, request.body.categoryBets, request.body.balance);
+            response.send(JSON.stringify({
+                type: "bet-response",
+                userID: request.body.userID,
+                balance: newBalance,
+                spinVal: currentWinningVal
+            }));
+        }
+        
     });
 
-    let gameInterval = setInterval(gameTick, 1000);
-    let currentSpinEnd = new Date();
-    let currentWinningVal = getWinner();
-    currentSpinEnd.setSeconds(currentSpinEnd.getSeconds() + 15);
+    let currentWinningVal;
+    let currentSpinEnd;
+    let gameInterval;
 
-    function gameTick(){
+    createNextSpin();
+
+    function gameTick() {
         let timeLeft = currentSpinEnd - new Date();
-        console.log("Time left" + timeLeft);
+        console.log("  Time left " + timeLeft);
         if (timeLeft < 0) {
             // Current Spin has officially ended
             console.log("Spin timer ended");
-            clearInterval(currentSpinEnd);
-            createNextSpin();
-
-            currentSpinEnd = new Date();
-            currentSpinEnd.setSeconds(currentSpinEnd.getSeconds() + 15);
+            clearInterval(gameInterval);
+            console.log("Waiting 10 seconds for local spin animation");
+            setTimeout(createNextSpin, 10000);
 
         }
     }
 
-    function createNextSpin(){
+    function createNextSpin() {
+        currentWinningVal = getWinner();
+        currentSpinEnd = new Date();
+        currentSpinEnd.setSeconds(currentSpinEnd.getSeconds() + 15);
+        console.log("New Spin starting, winning val = " + currentWinningVal);
+        gameInterval = setInterval(gameTick, 1000);
+    }
 
+    function getWinner() {
+        var random = Math.floor(Math.random() * 38) - 1;
+        if (random == -1) {
+            return "00";
+        }
+        return random.toString(10);
+    }
+
+    function processBets(activeSingleBets, activeCategoryBets, balance) {
+        let name, amount;
+        let initialBalance = balance;
+        for (let i = 0; i < activeCategoryBets.length; i++) {
+            name = activeCategoryBets[i].name;
+            amount = activeCategoryBets[i].amount;
+            switch (name) {
+                case "1 to 18":
+                    if (currentWinningVal > 0 && currentWinningVal < 19) {
+                        balance += (amount * 2);
+                    }
+                    break;
+                case "EVEN":
+                    if (currentWinningVal % 2 === 0) {
+                        balance += (amount * 2);
+                    }
+                    break;
+                case "RED":
+                    let redNums = [1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36]
+                    for (let j = 0; j < redNums.length; j++) {
+                        if (redNums[j].toString() === currentWinningVal) {
+                            console.log("RED");
+                            balance += (amount * 2);
+                        }
+                    }
+                    break;
+                case "BLACK":
+                    let blackNums = [2,4,6,8,10,11,13,15,17,20,22,24,26,28,29,31,33,35];
+                    for (let j = 0; j < blackNums.length; j++) {
+                        if (blackNums[j].toString() === currentWinningVal) {
+                            balance += (amount * 2);
+                            console.log("BLACK");
+                        }
+                    }
+                    break;
+                case "ODD":
+                    if (currentWinningVal % 2 === 1) {
+                        balance += (amount * 2);
+                    }
+                    break;
+                case "19 to 36":
+                    if (currentWinningVal > 18 && currentWinningVal < 36) {
+                        balance += (amount * 2);
+                    }
+                    break;
+                case "2 to 1 row-1":
+                    if (currentWinningVal > 0 && currentWinningVal % 3 === 0) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "2 to 1 row-2":
+                    if (currentWinningVal + 1 % 3 === 0) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "2 to 1 row-3":
+                    if (currentWinningVal + 2 % 3 === 0) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "1st 12":
+                    if (currentWinningVal > 0 && currentWinningVal < 13) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "2nd 12":
+                    if (currentWinningVal > 12 && currentWinningVal < 25) {
+                        balance += (amount * 3);
+                    }
+                    break;
+                case "3rd 12":
+                    if (currentWinningVal > 24 && currentWinningVal < 37) {
+                        balance += (amount * 3);
+                    }
+                    break;
+
+                default:
+                    console.log("Unknown switch on category bets");
+            }
+        }
+        for (let i = 0; i < activeSingleBets.length; i++) {
+            name = activeSingleBets[i].name;
+            amount = activeSingleBets[i].amount;
+            if (name === currentWinningVal) {
+                balance += (amount * 36);
+            }
+        }
+        console.log(balance);
+        return balance;
     }
 
 
-    app.listen(3000);
+    app.listen(process.env.PORT);
 })();

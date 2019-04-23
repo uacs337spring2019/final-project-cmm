@@ -1,0 +1,19 @@
+{
+  "name": "final-project-cmm",
+  "version": "1.0.0",
+  "description": "CSC 337 - Multiplayer Roulette Service",
+  "main": "roulette_game.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/uacs337spring2019/final-project-cmm.git"
+  },
+  "author": "Christopher Metz",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/uacs337spring2019/final-project-cmm/issues"
+  },
+  "homepage": "https://github.com/uacs337spring2019/final-project-cmm#readme"
+}

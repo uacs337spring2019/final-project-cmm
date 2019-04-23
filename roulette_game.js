@@ -4,9 +4,8 @@
 
     let activeSingleBets = [];
     let activeCategoryBets = [];
-    let today = new Date();
-    today.setSeconds(today.getSeconds() + 5);
-    let balance;
+    let currentSpinExpiration;
+    let balance = 5;
     let staked = 0;
     let spinTimer;
     let username;
@@ -15,39 +14,49 @@
     window.onload = function () {
         // 1) Show login page
         
-        // 1) Register all div clicks to record a bet
+        // 2) Register all div clicks to record a bet
         let bettingDivs = document.getElementsByClassName("betting-square");
         for (let i = 0; i < bettingDivs.length; i++) {
             bettingDivs[i].onclick = recordBet;
         }
-        // 3) Load Balance and current bet divs
+        // 3) Load current bet divs
         displayBets();
-        // 2) Load first roulette spin
+        // 4) Load first roulette spin by sending GET to service
         startSpin();
     }
 
-    function startSpin() {
-        spinTimer = setInterval(spinTimerTick, 1000);
+    function startSpin(){
+        // send a GET to service asking for current spin
+        let url = "http://localhost:3000?";
+        url += "type=getSpin";
+        fetch(url)
+            .then(checkStatus)
+            .then(function(response){
+                currentSpinExpiration = new Date(response);
+                console.log(response);
+                spinTimer = setInterval(spinTimerTick, 1000);
+            });
     }
 
     /** Called when spin timer timeout happens**/
     function spinTimerTick() {
-        let timeLeft = today - new Date();
+        let timeLeft = currentSpinExpiration - new Date();
+        console.log(timeLeft);
         if (timeLeft < 0) {
             // Current Spin has officially ended taking in bets
             // 1) call stopTimer() to clear the Interval
             stopTimer();
             // 2) sendBets() will send a user's bets to server. 
+            // server will respond with spin value
             sendBets();
-            // 3) 
+            // 3) send a GET to get spin results from service
+            setTimeout(startSpin, 12000);
         }
         updateTimer(timeLeft);
     }
 
     function stopTimer() {
         clearInterval(spinTimer);
-        today.setSeconds(today.getSeconds() + 5);
-        startSpin();
     }
 
     function sendBets() {
@@ -74,7 +83,9 @@
             .then(function (response) {
                 let receivingJSON = JSON.parse(response);
                 console.log(receivingJSON.type);
-                displayBets(balance - receivingJSON.balance);
+                activeCategoryBets = [];
+                activeSingleBets = [];
+                displaySpinVal(receivingJSON.spinVal, (receivingJSON.balance - balance));
             });
 
     }
@@ -91,11 +102,44 @@
         }
     }
 
+    function displaySpinVal(spinVal, balanceChange){
+        let numDivs = document.getElementsByClassName("single-bet");
+        
+        let runs = 0;
+        let interval = setInterval(function(){
+            if(runs === 30){
+                clearInterval(interval);
+                for(let i = 0; i < numDivs.length; i++){
+                    if(numDivs[i].children[0].innerHTML === spinVal){
+                        numDivs[i].classList.add("highlighted");
+                    }
+                    setTimeout(function(){
+                        numDivs[i].classList.remove("highlighted");
+                    }, 6000);
+                }
+                displayBets(balanceChange);
+
+            }
+            else{
+                runs++;
+                let random = Math.floor(Math.random() * 37);
+                numDivs[random].classList.add("highlighted");
+                setTimeout(function(){
+                    numDivs[random].classList.remove("highlighted");
+                }, 200);
+            }
+
+        }, 200);
+    }
+
 
     function updateTimer(timeLeft) {
         let spinDiv = document.getElementById("current-spin-div");
         let timerP = document.createElement("p");
         spinDiv.innerHTML = "";
+        if(timeLeft < 0){
+            timeLeft = 0;
+        }
         if (Math.round(timeLeft / 1000) < 10) {
             timerP.innerHTML = "0:0" + Math.round(timeLeft / 1000);
         } else {
@@ -154,7 +198,9 @@
         let activeCategoryBetsDiv = document.getElementById("active-category-bets-div");
         let balanceDiv = document.getElementById("balance-div");
 
-
+        if(result){
+            balance += result;
+        }
         balanceDiv.innerHTML = "";
         h2 = document.createElement("h2");
         h2.innerHTML = "$" + balance;
@@ -165,11 +211,9 @@
             let resultDiv = document.createElement("h4");
             if (result > 0) {
                 resultDiv.innerHTML = "You have won!    " + result + "$";
-            } else if(result < 0){
-                resultDiv.innerHTML = "You have lost...    " + result + "$";
             }
             else{
-                resultDiv.innerHTML = "Your balance has not changed";
+                resultDiv.innerHTML = "You did not win anything";
             }
             balanceDiv.appendChild(resultDiv);
         }

@@ -1,0 +1,6 @@
+{
+    "name": "Chris's Roulette Extravaganza - CSC 337 Final Project",
+    "description": "A node backend multiplayer roulette service",
+    "repository": "https://github.com/uacs337spring2019/final-project-cmm",
+    "keywords": ["node", "express", "static"]
+    }

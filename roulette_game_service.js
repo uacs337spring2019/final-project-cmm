@@ -26,7 +26,7 @@ Description: node.js service for chatit.js
     app.get('/', function (request, response) {
         // GET request to service
         console.log(request.query);
-        if (request.query.toString() == "{}") {
+        if (request.query.type === undefined) {
             console.log("rendering HTML");
             response.sendFile("/app/public/roulette_game.html");
         }

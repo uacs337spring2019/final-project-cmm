@@ -23,6 +23,8 @@ Description: node.js service for chatit.js
         next();
     });
 
+    app.use(express.static("public"));
+
     app.get('/', function (request, response) {
         // GET request to service
         console.log(request.query);

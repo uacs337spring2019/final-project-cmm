@@ -43,7 +43,12 @@ Multiplayer Roulette Game
                 leaderboardDiv.innerHTML = "";
                 for (let i = 0; i < responses.length; i++) {
                     let newP = document.createElement("p");
-                    newP.innerHTML = responses[i];
+                    if(responses[i].includes(userID)){
+                        newP.innerHTML = "<strong>" + responses[i] + "</strong>";
+                    }
+                    else{
+                        newP.innerHTML = responses[i];
+                    }
                     leaderboardDiv.appendChild(newP);
                 }
             });

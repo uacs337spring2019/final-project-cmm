@@ -84,7 +84,7 @@ Description: node.js service for chatit.js
         con.query(sql, function (err1, result) {
             if (err1) throw err1;
             // if result is empty, userID does not exist in table
-            if (result.length === 0) {
+            if (!result) {
                 createNewUser(userID);
             } else {
                 console.log("username exists, check if logged in for user " + userID);

@@ -5,22 +5,19 @@
     let activeSingleBets = [];
     let activeCategoryBets = [];
     let timeLeft;
-    let balance;
+    let balance = 0;
     let balanceChange;
     let spinVal;
     let spinTimer;
     let userID;
 
     window.onload = function () {
-        // 1) Show login page
-        sendLogin();
-        // 2) Register all div clicks to record a bet
+        // 1) Register all div clicks to record a bet
         let bettingDivs = document.getElementsByClassName("betting-square");
         for (let i = 0; i < bettingDivs.length; i++) {
             bettingDivs[i].onclick = recordBet;
         }
-        // 3) Load current bet divs
-        displayBets();
+        sendLogin();
     }
 
     function sendLogin(){
@@ -52,6 +49,7 @@
                 }
                 else{
                     window.alert("Successful login for username: " + userID);
+                    displayBets();
                     startSpin();
                 }
                 

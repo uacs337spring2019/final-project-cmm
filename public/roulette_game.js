@@ -9,7 +9,7 @@
     let balanceChange;
     let spinVal;
     let spinTimer;
-    let userID;
+    let userID = "";
 
     window.onload = function () {
         // 1) Register all div clicks to record a bet

@@ -60,7 +60,7 @@
     function sendBets() {
         // Function will compile a json object to send to the server
         // Which contains username, balance, single number bets, category bets,
-        let url = "http://roulette-extravaganza.herokuapp.com/";
+        let url = "https://roulette-extravaganza.herokuapp.com/";
         let sendingJSON = {
             type: "bets",
             userID: username,

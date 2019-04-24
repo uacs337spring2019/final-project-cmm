@@ -110,7 +110,6 @@ Description: node.js service for chatit.js
         });
     }
 
-
     function createDBTable() {
         con.connect(function (err) {
             if (err) throw err;
@@ -123,6 +122,7 @@ Description: node.js service for chatit.js
             sql += "userID VARCHAR(255) NOT NULL,";
             sql += "balance INT DEFAULT 5,";
             sql += "loggedIn boolean DEFAULT false,"
+            sql += "betTimeout INT DEFAULT 0,"
             sql += "PRIMARY KEY (userID))";
             con.query(sql, function (err, result) {
                 if (err) throw err;
@@ -142,6 +142,7 @@ Description: node.js service for chatit.js
 
         }
     }
+
 
     function createNextSpin() {
         currentWinningVal = getWinner();
@@ -250,7 +251,19 @@ Description: node.js service for chatit.js
             balance: balance,
             spinVal: currentWinningVal
         }));
+        updateBalance(userID, balance);
 
     }
+
+    function updateBalance(userID, balance){
+        let sql = "UPDATE users ";
+        sql += "SET balance = " + balance + " ";
+        sql += "WHERE userID = '" + userID + "'";
+        con.query(sql, function(err){
+            if(err) throw err;
+            console.log("Balance updated in DB");
+        });
+    }
+
     app.listen(process.env.PORT);
 })();

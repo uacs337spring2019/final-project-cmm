@@ -36,21 +36,20 @@ Description: node.js service for chatit.js
             "Origin, X-Requested-With, Content-Type, Accept");
         next();
     });
-    
+
     app.get('/', function (request, response) {
         // GET request to service
 
-        if(request.query.type){
+        if (request.query.type) {
             if (request.query.type === "getSpin") {
                 console.log("GET : getSpin request received");
                 response.send("" + (currentSpinEnd - new Date()));
             }
-        }
-        else{
+        } else {
             console.log("rendering HTML");
             app.use(express.static("public"));
             response.sendFile("/app/public/roulette_game.html");
-        
+
         }
     });
 
@@ -68,8 +67,7 @@ Description: node.js service for chatit.js
                 balance: newBalance,
                 spinVal: currentWinningVal
             }));
-        }
-        else if(request.body.type === "login"){
+        } else if (request.body.type === "login") {
             console.log("login received");
             let balance = userLogin(request.body.userID);
             response.send(JSON.stringify({
@@ -81,32 +79,30 @@ Description: node.js service for chatit.js
 
     });
 
-    function userLogin(userID){
-            var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
-            con.query(sql, function(err1, result){
-                if (err1) throw err1;
-                // if result is empty, userID does not exist in table
-                if(result.size === 0){
-                    console.log("Create new user " + userID);
+    function userLogin(userID) {
+        var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
+        con.query(sql, function (err1, result) {
+            if (err1) throw err1;
+            // if result is empty, userID does not exist in table
+            if (result.size === 0) {
+                console.log("Create new user " + userID);
+            } else {
+                console.log("username exists, check if logged in for user " + userID);
+                if (result.loggedIn === true) {
+                    return -1;
+                } else {
+                    return result.balance;
                 }
-                else{
-                    console.log("username exists, check if logged in for user " + userID);
-                    if(response.loggedIn === true){
-                        return -1;
-                    }
-                    else{
-                        return response.balance;
-                    }
-                }
-            });
+            }
+        });
     }
 
-    
-    function createDBTable(){
-        con.connect(function(err){
-            if(err) throw err;
+
+    function createDBTable() {
+        con.connect(function (err) {
+            if (err) throw err;
             let sql = "DROP TABLE users";
-            con.query(sql, function(err, result){
+            con.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log("Table dropped");
             });
@@ -115,7 +111,7 @@ Description: node.js service for chatit.js
             sql += "balance INT DEFAULT 5,";
             sql += "loggedIn boolean DEFAULT false,"
             sql += "PRIMARY KEY (userID))";
-            con.query(sql, function(err, result){
+            con.query(sql, function (err, result) {
                 if (err) throw err;
                 console.log("Table created");
             })
@@ -196,7 +192,7 @@ Description: node.js service for chatit.js
                     break;
                 case "2 to 1 row-1":
                     if (numVal > 0 && (numVal % 3 === 0)) {
-                        balance += (amount * 3);    
+                        balance += (amount * 3);
                     }
                     break;
                 case "2 to 1 row-2":

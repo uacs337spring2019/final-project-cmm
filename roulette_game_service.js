@@ -74,7 +74,7 @@ Description: node.js service for chatit.js
 
     });
 
-    function userLogin(response, request, userID) {
+    function userLogin(response, userID) {
         let balance = -1;
         var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
         con.query(sql, function (err, rows, fields) {

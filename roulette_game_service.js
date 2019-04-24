@@ -92,7 +92,7 @@ Description: node.js service for chatit.js
                 console.log(rows[0]);
                 console.log(rows[0].userID);
                 console.log(rows[0].balance);
-                console.log(rows[0].loggedIn);
+                console.log(rows[0].loggedIn.toString);
                 
                 
                 if (rows[0].loggedIn.toString() === '1') {

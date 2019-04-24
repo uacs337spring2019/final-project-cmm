@@ -26,7 +26,7 @@ Description: node.js service for chatit.js
     let currentSpinEnd;
     let gameInterval;
 
-    //createDBTable();
+    createDBTable();
     createNextSpin();
 
     app.use(function (req, res, next) {

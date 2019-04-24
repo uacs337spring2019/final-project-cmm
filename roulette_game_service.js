@@ -85,7 +85,7 @@ Description: node.js service for chatit.js
                     leaderBoard.push(rows[i].userID + ": $" + rows[i].balance + "~~~");
                 }
                 else{
-                    leaderBoard.push(rows[i].userID + ": $" + rows[i].balance
+                    leaderBoard.push(rows[i].userID + ": $" + rows[i].balance);
                 }
             }
             console.log(leaderBoard.toString());

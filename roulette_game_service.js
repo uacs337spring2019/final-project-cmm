@@ -91,12 +91,13 @@ Description: node.js service for chatit.js
                 } else {
                     balance = Number(rows[0].balance);
                 }
-                response.send(JSON.stringify({
-                    type: "login-response",
-                    userID: request.body.userID,
-                    balance: balance
-                }));
+                
             }
+            response.send(JSON.stringify({
+                type: "login-response",
+                userID: request.body.userID,
+                balance: balance
+            }));
         });
     }
 

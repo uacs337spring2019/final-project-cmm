@@ -31,7 +31,7 @@
             .then(checkStatus)
             .then(function (response) {
                 console.log(response);
-                let responses = response.split("~~~");
+                let responses = response.split(",");
                 let leaderboardDiv = document.getElementById("leaderboard-content-div");
                 leaderboardDiv.innerHTML = "";
                 for(let i = 0; i < responses.length; i++){
@@ -44,7 +44,7 @@
 
     function sendLogin(){
         // Sends service userID, once valid, will call startSpin()
-        while(userID.length <= 0){
+        while(userID.length <= 0 || userID.contains(",")){
             userID = window.prompt("Please enter your username");
         }
         console.log(userID)

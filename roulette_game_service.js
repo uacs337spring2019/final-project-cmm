@@ -74,7 +74,7 @@ Description: node.js service for chatit.js
 
     });
 
-    function userLogin(response, userID) {
+    function userLogin(response, request, userID) {
         let balance = -1;
         var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
         con.query(sql, function (err, rows, fields) {
@@ -95,7 +95,7 @@ Description: node.js service for chatit.js
             }
             response.send(JSON.stringify({
                 type: "login-response",
-                userID: request.body.userID,
+                userID: userID,
                 balance: balance
             }));
         });

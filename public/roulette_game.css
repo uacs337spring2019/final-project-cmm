@@ -7,7 +7,7 @@ html, body{
 #header-div{
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
+    justify-content: space-evenly;
 }
 
 #title-div{

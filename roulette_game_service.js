@@ -70,6 +70,7 @@ Description: node.js service for chatit.js
         } else if (request.body.type === "login") {
             console.log("login received");
             let balance = userLogin(request.body.userID);
+            console.log(balance);
             response.send(JSON.stringify({
                 type: "login-response",
                 userID: request.body.userID,
@@ -94,7 +95,7 @@ Description: node.js service for chatit.js
                 console.log(rows[0].loggedIn);
                 
                 
-                if (rows[0].loggedIn === 1) {
+                if (rows[0].loggedIn.toString() === '1') {
                     return -1;
                 } else {
                     return rows[0].balance;

@@ -60,8 +60,6 @@ Description: node.js service for chatit.js
         // chat message to be stored in messages.txt
 
         console.log("POST received");
-        console.log("type = " + request.body.type);
-        console.log("userID = " + request.body.userID);
         if (request.body.type === "bets") {
             let newBalance = processBets(request.body.singleNumberBets, request.body.categoryBets, request.body.balance);
             response.send(JSON.stringify({
@@ -84,9 +82,6 @@ Description: node.js service for chatit.js
     });
 
     function userLogin(userID){
-        con.connect(function(err){
-            if(err) throw err;
-            console.log("Connected to DB");
             var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
             con.query(sql, function(err1, result){
                 if (err1) throw err1;
@@ -103,8 +98,7 @@ Description: node.js service for chatit.js
                         return response.balance;
                     }
                 }
-            })
-        })
+            });
     }
 
     

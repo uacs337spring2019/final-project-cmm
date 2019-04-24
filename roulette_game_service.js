@@ -30,9 +30,11 @@ Description: node.js service for chatit.js
     app.get('/', function (request, response) {
         // GET request to service
 
-        if (request.query.type === "getSpin") {
-            console.log("GET : getSpin request received");
-            response.send(currentSpinEnd - new Date());
+        if(request.query.type){
+            if (request.query.type === "getSpin") {
+                console.log("GET : getSpin request received");
+                response.send(currentSpinEnd - new Date());
+            }
         }
         else{
             console.log("rendering HTML");

@@ -31,8 +31,14 @@
             .then(checkStatus)
             .then(function(response){
                 timeLeft = Number(response);
-                console.log(response);
-                spinTimer = setInterval(spinTimerTick, 1000);
+                if(timeLeft < 0){
+                    // current spin already ended. Wait until new one
+                    // time to wait = 12 seconds after spin end
+                    setTimeout(startSpin, Math.abs(12000 + timeLeft));
+                }
+                else{
+                    spinTimer = setInterval(spinTimerTick, 1000);
+                }
             });
     }
 

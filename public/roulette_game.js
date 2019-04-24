@@ -190,6 +190,9 @@
         if (singleHighlightRuns >= 10) {
             clearInterval(highlightInterval);
             singleHighlightRuns = 0;
+            for (let i = 0; i < numDivs.length; i++) {
+                numDivs[i].classList.remove("highlighted");
+            }
         } else {
             
             for (let i = 0; i < numDivs.length; i++) {

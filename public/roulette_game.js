@@ -42,7 +42,7 @@
             .then(function (response) {
                 let receivingJSON = JSON.parse(response);
                 console.log("balance = " + receivingJSON.balance);
-                balance = receivingJSON.balance;
+                balance = Number(receivingJSON.balance);
                 if(balance < 0){
                     window.alert("That username is already in use");
                     sendLogin();

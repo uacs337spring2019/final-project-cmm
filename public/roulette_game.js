@@ -109,6 +109,9 @@
     function highlightTick() {
         if (highlightRuns >= 30) {
             clearInterval(highlightInterval);
+            for (let i = 0; i < numDivs.length; i++) {
+                numDivs[i].classList.remove("highlighted");
+            }
             highlightRuns = 0;
             highlightInterval = setInterval(singleValTick, 500);
             displayBets(balanceChange);

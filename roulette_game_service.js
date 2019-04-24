@@ -71,8 +71,23 @@ Description: node.js service for chatit.js
                 spinVal: currentWinningVal
             }));
         }
+        else if(request.body.type === "login"){
+            let balance = userLogin(request.body.userID);
+        }
 
     });
+
+    function userLogin(userID){
+        con.connect(function(err){
+            if(err) throw err;
+            console.log("Connected to DB");
+            var sql = "SELECT loggedIn FROM users WHERE userID = '" + userID + "'";
+            con.query(sql, function(err, result){
+                if (err) throw err;
+                console.log(result);
+            })
+        })
+    }
 
     function createDBTable(){
         con.connect(function(err){
@@ -81,6 +96,7 @@ Description: node.js service for chatit.js
             var sql = "CREATE TABLE users (";
             sql += "userID VARCHAR(255) NOT NULL,";
             sql += "balance INT DEFAULT 5,";
+            sql += "loggedIn boolean DEFAULT false,"
             sql += "PRIMARY KEY (userID))";
             con.query(sql, function(err, result){
                 if (err) throw err;

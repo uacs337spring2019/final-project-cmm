@@ -280,6 +280,7 @@
             newDiv.appendChild(newP);
             activeCategoryBetsDiv.appendChild(newDiv);
         }
+        document.getElementById("logout-div").innerHTML = "";
         let logoutButton = document.createElement("button");
         logoutButton.innerHTML = "Logout";
         logoutButton.onclick = sendLogout;

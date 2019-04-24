@@ -86,6 +86,7 @@ Description: node.js service for chatit.js
             // if result is empty, userID does not exist in table
             if (result.length === 0) {
                 console.log("Create new user " + userID);
+                createNewUser(userID);
             } else {
                 console.log("username exists, check if logged in for user " + userID);
                 if (result.loggedIn === true) {
@@ -95,6 +96,10 @@ Description: node.js service for chatit.js
                 }
             }
         });
+    }
+
+    function createNewUser(userID){
+        
     }
 
 

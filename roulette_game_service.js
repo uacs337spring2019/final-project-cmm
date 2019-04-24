@@ -140,7 +140,8 @@ Description: node.js service for chatit.js
                     break;
                 case "2 to 1 row-1":
                     if (numVal > 0 && numVal % 3 === 0) {
-                        balance += (amount * 3);
+                        console.log("2 to 1 row 1");
+                        balance += (amount * 3);    
                     }
                     break;
                 case "2 to 1 row-2":

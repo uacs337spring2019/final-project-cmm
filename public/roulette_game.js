@@ -127,7 +127,7 @@
     }
 
     function singleValTick() {
-        if (highlightRuns >= 10) {
+        if (highlightRuns >= 6) {
             clearInterval(highlightInterval);
             highlightRuns = 0;
         } else {

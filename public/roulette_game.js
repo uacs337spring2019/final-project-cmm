@@ -107,6 +107,7 @@
     }
 
     function highlightTick() {
+        let numDivs = document.getElementsByClassName("single-bet");
         if (highlightRuns >= 30) {
             clearInterval(highlightInterval);
             for (let i = 0; i < numDivs.length; i++) {
@@ -117,7 +118,7 @@
             displayBets(balanceChange);
         } else {
             let random = Math.floor(Math.random() * 37);
-            let numDivs = document.getElementsByClassName("single-bet");
+            
             for (let i = 0; i < numDivs.length; i++) {
                 numDivs[i].classList.remove("highlighted");
             }
@@ -127,11 +128,12 @@
     }
 
     function singleValTick() {
+        let numDivs = document.getElementsByClassName("single-bet");
         if (highlightRuns >= 6) {
             clearInterval(highlightInterval);
             highlightRuns = 0;
         } else {
-            let numDivs = document.getElementsByClassName("single-bet");
+            
             for (let i = 0; i < numDivs.length; i++) {
                 if (numDivs[i].children[0].innerHTML === spinVal) {
                     if (numDivs[i].classList.contains("highlighted")) {

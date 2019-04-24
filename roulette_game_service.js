@@ -78,7 +78,7 @@ Description: node.js service for chatit.js
         con.connect(function(err){
             if(err) throw err;
             console.log("Connected to DB");
-            var sql = "CREATE TABLE [IF NOT EXISTS] users (";
+            var sql = "CREATE TABLE users (";
             sql += "userID VARCHAR(255) NOT NULL,";
             sql += "balance INT DEFAULT 5,";
             sql += "PRIMARY KEY (userID))";

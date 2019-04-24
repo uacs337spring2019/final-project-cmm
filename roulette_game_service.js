@@ -86,6 +86,7 @@ Description: node.js service for chatit.js
             response.send(leaderBoard.toString());
         })
     }
+    
 
     function userLogout(response,userID){
         let sql = "UPDATE users ";

@@ -95,16 +95,12 @@ Description: node.js service for chatit.js
     function createDBTable(){
         con.connect(function(err){
             if(err) throw err;
-            var sql = "DROP TABLE users";
+            let sql = "DROP TABLE users";
             con.query(sql, function(err, result){
                 if (err) throw err;
                 console.log("Table dropped");
-            })
-        });
-        con.connect(function(err){
-            if(err) throw err;
-            console.log("Connected to DB");
-            var sql = "CREATE TABLE users (";
+            });
+            sql = "CREATE TABLE users (";
             sql += "userID VARCHAR(255) NOT NULL,";
             sql += "balance INT DEFAULT 5,";
             sql += "loggedIn boolean DEFAULT false,"

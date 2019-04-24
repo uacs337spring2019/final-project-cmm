@@ -20,6 +20,8 @@
         sendLogin();
     }
 
+    window.onbeforeunload = sendLogout;
+
     function sendLogin(){
         // Sends service userID, once valid, will call startSpin()
         userID = window.prompt("Please enter your username");

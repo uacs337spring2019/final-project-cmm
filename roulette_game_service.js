@@ -100,7 +100,7 @@ Description: node.js service for chatit.js
                 if (err) throw err;
                 console.log("Table dropped");
             })
-        })
+        });
         con.connect(function(err){
             if(err) throw err;
             console.log("Connected to DB");
@@ -113,7 +113,7 @@ Description: node.js service for chatit.js
                 if (err) throw err;
                 console.log("Table created");
             })
-        })
+        });
     }
 
     function gameTick() {

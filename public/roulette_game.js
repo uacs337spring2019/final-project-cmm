@@ -290,7 +290,8 @@
     function sendLogout(){
         let url = "https://roulette-extravaganza.herokuapp.com/";
         let sendingJSON = {
-            type: "logout"
+            type: "logout",
+            userID: userID
         };
 
         fetch(url, {

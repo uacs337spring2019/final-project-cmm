@@ -81,7 +81,7 @@ Description: node.js service for chatit.js
         con.connect(function(err){
             if(err) throw err;
             console.log("Connected to DB");
-            var sql = "SELECT loggedIn FROM users WHERE userID = '" + userID + "'";
+            var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
             con.query(sql, function(err, result){
                 if (err) throw err;
                 console.log(result);

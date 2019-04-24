@@ -106,6 +106,7 @@ Description: node.js service for chatit.js
         for (let i = 0; i < activeCategoryBets.length; i++) {
             name = activeCategoryBets[i].name;
             amount = activeCategoryBets[i].amount;
+            console.log(name);
             switch (name) {
                 case "1 to 18":
                     if (numVal > 0 && numVal < 19) {

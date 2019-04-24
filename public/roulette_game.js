@@ -1,3 +1,10 @@
+/*
+Christopher Metz
+CSC 337
+Final project
+Multiplayer Roulette Game
+*/
+
 "use_strict";
 
 (function () {

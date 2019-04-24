@@ -81,18 +81,19 @@ Description: node.js service for chatit.js
 
     function userLogin(userID) {
         var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
-        con.query(sql, function (err1, result) {
-            if (err1) throw err1;
+        con.query(sql, function (err, rows, fields) {
+            if (err) throw err;
             // if result is empty, userID does not exist in table
-            if (!result.length) {
+            if (!rows.length) {
                 createNewUser(userID);
             } else {
                 console.log("username exists, check if logged in for user " + userID);
-                console.log(result[0]);
-                if (result[0].loggedIn === 1) {
+                console.log(rows);
+                console.log(fields);
+                if (rows[0].loggedIn === 1) {
                     return -1;
                 } else {
-                    return result[0].balance;
+                    return rows[0].balance;
                 }
             }
         });

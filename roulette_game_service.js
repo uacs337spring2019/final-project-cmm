@@ -83,7 +83,6 @@ Description: node.js service for chatit.js
             for(let i = 0; i < rows.length; i++){
                 leaderBoard.push(rows[i].userID + ": $" + rows[i].balance);
             }
-            console.log(leaderBoard.toString());
             response.send(leaderBoard.toString());
         })
     }

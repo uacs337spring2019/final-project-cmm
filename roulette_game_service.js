@@ -183,7 +183,7 @@ Description: node.js service for chatit.js
         for (let i = 0; i < activeSingleBets.length; i++) {
             name = activeSingleBets[i].name;
             amount = activeSingleBets[i].amount;
-            if (name === numVal) {
+            if (name === currentWinningVal) {
                 balance += (amount * 36);
             }
             console.log(balance);

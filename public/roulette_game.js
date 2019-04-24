@@ -38,6 +38,7 @@
 
     /** Called when spin timer timeout happens**/
     function spinTimerTick() {
+        timeLeft = timeLeft - 1000;
         console.log(timeLeft);
         if (timeLeft < 0) {
             // Current Spin has officially ended taking in bets

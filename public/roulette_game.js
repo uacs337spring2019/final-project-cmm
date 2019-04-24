@@ -30,7 +30,6 @@
         fetch(url)
             .then(checkStatus)
             .then(function (response) {
-                console.log(response);
                 let responses = response.split(",");
                 let leaderboardDiv = document.getElementById("leaderboard-content-div");
                 leaderboardDiv.innerHTML = "";

@@ -35,7 +35,6 @@ Multiplayer Roulette Game
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers",
             "Origin, X-Requested-With, Content-Type, Accept");
-        next();
     });
 
     app.get('/', function (request, response) {

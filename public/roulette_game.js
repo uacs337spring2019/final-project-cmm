@@ -28,11 +28,8 @@
         userID = window.prompt("Please enter your username");
         let url = "https://roulette-extravaganza.herokuapp.com/";
         let sendingJSON = {
-            type: "bets",
-            userID: username,
-            balance: balance,
-            singleNumberBets: activeSingleBets,
-            categoryBets: activeCategoryBets
+            type: "login",
+            userID: username
         };
 
         fetch(url, {

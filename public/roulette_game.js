@@ -5,15 +5,15 @@
     let activeSingleBets = [];
     let activeCategoryBets = [];
     let timeLeft;
-    let balance = 5;
+    let balance;
     let balanceChange;
     let spinVal;
     let spinTimer;
-    let username;
+    let userID;
 
     window.onload = function () {
         // 1) Show login page
-
+        sendLogin();
         // 2) Register all div clicks to record a bet
         let bettingDivs = document.getElementsByClassName("betting-square");
         for (let i = 0; i < bettingDivs.length; i++) {
@@ -21,8 +21,42 @@
         }
         // 3) Load current bet divs
         displayBets();
-        // 4) Load first roulette spin by sending GET to service
-        startSpin();
+    }
+
+    function sendLogin(){
+        // Sends service userID, once valid, will call startSpin()
+        userID = window.prompt("Please enter your username");
+        let url = "https://roulette-extravaganza.herokuapp.com/";
+        let sendingJSON = {
+            type: "bets",
+            userID: username,
+            balance: balance,
+            singleNumberBets: activeSingleBets,
+            categoryBets: activeCategoryBets
+        };
+
+        fetch(url, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(sendingJSON),
+            })
+            .then(checkStatus)
+            .then(function (response) {
+                let receivingJSON = JSON.parse(response);
+                balance = receivingJSON.balance;
+                if(balance < 0){
+                    window.alert("That username is already in use");
+                    sendLogin();
+                }
+                else{
+                    startSpin();
+                }
+                
+            });
+        
     }
 
     function startSpin() {

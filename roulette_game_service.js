@@ -74,6 +74,11 @@ Description: node.js service for chatit.js
         else if(request.body.type === "login"){
             console.log("login received");
             let balance = userLogin(request.body.userID);
+            response.send(JSON.stringify({
+                type: "login-response",
+                userID: request.body.userID,
+                balance: balance
+            }));
         }
 
     });
@@ -85,9 +90,19 @@ Description: node.js service for chatit.js
             var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
             con.query(sql, function(err1, result){
                 if (err1) throw err1;
-                console.log(result);
                 // if result is empty, userID does not exist in table
-                
+                if(result.size === 0){
+                    console.log("Create new user " + userID);
+                }
+                else{
+                    console.log("username exists, check if logged in for user " + userID);
+                    if(response.loggedIn === true){
+                        return -1;
+                    }
+                    else{
+                        return response.balance;
+                    }
+                }
             })
         })
     }

@@ -73,7 +73,6 @@ Description: node.js service for chatit.js
 
     function gameTick() {
         let timeLeft = currentSpinEnd - new Date();
-        console.log("  Time left " + timeLeft);
         if (timeLeft < 0) {
             // Current Spin has officially ended
             console.log("Spin timer ended");

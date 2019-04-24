@@ -83,11 +83,11 @@ Description: node.js service for chatit.js
             if(err) throw err;
             console.log("Connected to DB");
             var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
-            con.query(sql, function(err, result){
-                if (err) throw err;
+            con.query(sql, function(err1, result){
+                if (err1) throw err1;
                 console.log(result);
                 // if result is empty, userID does not exist in table
-
+                
             })
         })
     }

@@ -69,18 +69,12 @@ Description: node.js service for chatit.js
             }));
         } else if (request.body.type === "login") {
             console.log("login received");
-            let balance1 = userLogin(request.body.userID);
-            console.log("DB balance = " + balance1);
-            response.send(JSON.stringify({
-                type: "login-response",
-                userID: request.body.userID,
-                balance: balance1
-            }));
+            userLogin(response, request.body.userID);
         }
 
     });
 
-    function userLogin(userID) {
+    function userLogin(response, userID) {
         let balance = -1;
         var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
         con.query(sql, function (err, rows, fields) {
@@ -97,10 +91,13 @@ Description: node.js service for chatit.js
                 } else {
                     balance = Number(rows[0].balance);
                 }
+                response.send(JSON.stringify({
+                    type: "login-response",
+                    userID: request.body.userID,
+                    balance: balance
+                }));
             }
         });
-        console.log(balance);
-        return balance;
     }
 
     function createNewUser(userID){

@@ -77,7 +77,10 @@ Description: node.js service for chatit.js
         sql += "WHERE userID = '" + userID + "'";
         con.query(sql, function(err){
             if(err) throw err;
-            console.log("Balance updated in DB");
+            console.log("logout from " + userID);
+            response.send(JSON.stringify({
+                type: "logout-response"
+            }));
         });
     }
 

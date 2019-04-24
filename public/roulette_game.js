@@ -281,7 +281,7 @@
             activeCategoryBetsDiv.appendChild(newDiv);
         }
         let logoutButton = document.createElement("button");
-        logoutButton.innerHTML = "logout";
+        logoutButton.innerHTML = "Logout";
         logoutButton.onclick = sendLogout;
         document.getElementById("logout-div").appendChild(logoutButton);
     }

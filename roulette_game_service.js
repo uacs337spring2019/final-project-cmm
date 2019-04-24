@@ -26,7 +26,7 @@ Description: node.js service for chatit.js
     let currentSpinEnd;
     let gameInterval;
 
-    createDBTable();
+    //createDBTable();
     createNextSpin();
 
     app.use(function (req, res, next) {
@@ -85,11 +85,22 @@ Description: node.js service for chatit.js
             con.query(sql, function(err, result){
                 if (err) throw err;
                 console.log(result);
+                // if result is empty, userID does not exist in table
+
             })
         })
     }
 
+    
     function createDBTable(){
+        con.connect(function(err){
+            if(err) throw err;
+            var sql = "DROP TABLE users";
+            con.query(sql, function(err, result){
+                if (err) throw err;
+                console.log("Table dropped");
+            })
+        })
         con.connect(function(err){
             if(err) throw err;
             console.log("Connected to DB");

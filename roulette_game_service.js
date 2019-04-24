@@ -13,7 +13,7 @@ Description: node.js service for chatit.js
     let fs = require('fs');
     let mysql = require('mysql');
     let con = mysql.createConnection({
-        host: "us-cdbr-iron-east-02.cleardb.net/",
+        host: "us-cdbr-iron-east-02.cleardb.net",
         user: "b43dc6cf7d6820",
         password: "2414e5ae",
         database: "heroku_62979d63eba07b5"

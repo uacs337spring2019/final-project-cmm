@@ -95,10 +95,11 @@ Description: node.js service for chatit.js
                     console.log("user is logged in");
                     balance = -1;
                 } else {
-                    balance = rows[0].balance;
+                    balance = Number(rows[0].balance);
                 }
             }
         });
+        console.log(balance);
         return balance;
     }
 

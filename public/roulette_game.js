@@ -24,7 +24,9 @@
 
     function sendLogin(){
         // Sends service userID, once valid, will call startSpin()
-        userID = window.prompt("Please enter your username");
+        while(userID.length <= 0){
+            userID = window.prompt("Please enter your username");
+        }
         console.log(userID)
         let url = "https://roulette-extravaganza.herokuapp.com/";
         let sendingJSON = {

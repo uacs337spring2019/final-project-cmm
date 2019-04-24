@@ -128,7 +128,6 @@
                 
                 displaySpinVal();
             });
-
     }
 
 
@@ -281,6 +280,30 @@
             newDiv.appendChild(newP);
             activeCategoryBetsDiv.appendChild(newDiv);
         }
+        let logoutButton = document.createElement("button");
+        logoutButton.innerHTML = "logout";
+        logoutButton.onclick = sendLogout;
+        document.getElementById("logout-div").appendChild(logoutButton);
+    }
+
+    function sendLogout(){
+        let url = "https://roulette-extravaganza.herokuapp.com/";
+        let sendingJSON = {
+            type: "logout"
+        };
+
+        fetch(url, {
+                method: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(sendingJSON),
+            })
+            .then(checkStatus)
+            .then(function (response) {
+                location.reload("https://roulette-extravaganza.herokuapp.com/");
+            });
     }
 
     /**checks if response status is passable value

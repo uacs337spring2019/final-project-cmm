@@ -65,8 +65,21 @@ Description: node.js service for chatit.js
             console.log("login received");
             userLogin(response, request.body.userID);
         }
+        else if(request.body.type === "logout"){
+            userLogout(response,request.body.userID);
+        }
 
     });
+
+    function userLogout(response,userID){
+        let sql = "UPDATE users ";
+        sql += "SET loggedIn = FALSE ";
+        sql += "WHERE userID = '" + userID + "'";
+        con.query(sql, function(err){
+            if(err) throw err;
+            console.log("Balance updated in DB");
+        });
+    }
 
     function userLogin(response, userID) {
         let balance = -1;

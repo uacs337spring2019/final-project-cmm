@@ -60,13 +60,7 @@ Description: node.js service for chatit.js
 
         console.log("POST received");
         if (request.body.type === "bets") {
-            let newBalance = processBets(request.body.singleNumberBets, request.body.categoryBets, request.body.balance);
-            response.send(JSON.stringify({
-                type: "bet-response",
-                userID: request.body.userID,
-                balance: newBalance,
-                spinVal: currentWinningVal
-            }));
+            processBets(response, request.body.singleNumberBets, request.body.categoryBets, request.body.balance);
         } else if (request.body.type === "login") {
             console.log("login received");
             userLogin(response, request.body.userID);
@@ -165,7 +159,7 @@ Description: node.js service for chatit.js
         return random.toString(10);
     }
 
-    function processBets(activeSingleBets, activeCategoryBets, balance) {
+    function processBets(response, activeSingleBets, activeCategoryBets, balance) {
         let name, amount;
         let numVal = Number(currentWinningVal);
         for (let i = 0; i < activeCategoryBets.length; i++) {
@@ -250,7 +244,12 @@ Description: node.js service for chatit.js
                 balance += (amount * 36);
             }
         }
-        return balance;
+        response.send(JSON.stringify({
+            type: "bet-response",
+            userID: request.body.userID,
+            balance: balance,
+            spinVal: currentWinningVal
+        }));
 
     }
     app.listen(process.env.PORT);

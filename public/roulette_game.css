@@ -19,6 +19,7 @@ html, body{
     display: flex;
     flex-direction: column;
     border: 2px dotted black;
+    padding: 5px;
 }
 
 #game-board-div{

@@ -44,7 +44,7 @@
 
     function sendLogin(){
         // Sends service userID, once valid, will call startSpin()
-        while(userID.length <= 0 || userID.contains(",")){
+        while(userID.length <= 0 || userID.indexOf(',' > -1)){
             userID = window.prompt("Please enter your username");
         }
         console.log(userID)

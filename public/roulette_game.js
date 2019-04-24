@@ -96,6 +96,7 @@
                 } else {
                     spinTimer = setInterval(spinTimerTick, 1000);
                 }
+                getLeaderBoard();
             });
     }
 

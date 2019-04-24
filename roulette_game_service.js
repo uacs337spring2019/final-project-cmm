@@ -29,16 +29,18 @@ Description: node.js service for chatit.js
     
     app.get('/', function (request, response) {
         // GET request to service
-        console.log(JSON.parse(request.query));
-        if (request.query == 0) {
-            console.log("rendering HTML");
-            app.use(express.static("public"));
-            response.sendFile("/app/public/roulette_game.html");
-        }
+        console.log(request.query);
+        
 
         if (request.query.type === "getSpin") {
             console.log("GET : getSpin request received");
             response.send(currentSpinEnd - new Date());
+        }
+        else{
+            console.log("rendering HTML");
+            app.use(express.static("public"));
+            response.sendFile("/app/public/roulette_game.html");
+        
         }
 
 

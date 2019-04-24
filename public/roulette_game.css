@@ -7,6 +7,16 @@ html, body{
 #header-div{
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
+}
+
+#title-div{
+    text-align: center;
+}
+
+#leaderboard-div{
+    display: flex;
+    flex-direction: column;
 }
 
 #game-board-div{

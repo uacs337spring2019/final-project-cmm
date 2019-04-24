@@ -18,6 +18,7 @@ html, body{
 #leaderboard-div{
     display: flex;
     flex-direction: column;
+    border: 2px dotted black;
 }
 
 #game-board-div{

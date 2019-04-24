@@ -107,7 +107,7 @@ Description: node.js service for chatit.js
         con.query(sql, function(err,rows, fields){
             if(err) throw err;
             console.log("New user created for userID=" + userID);
-            balance = rows[0].balance;
+            balance = 5;
             response.send(JSON.stringify({
                 type: "login-response",
                 userID: userID,

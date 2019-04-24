@@ -8,7 +8,6 @@ Multiplayer Roulette Game
 "use_strict";
 
 (function () {
-    "use strict";
 
     let activeSingleBets = [];
     let activeCategoryBets = [];

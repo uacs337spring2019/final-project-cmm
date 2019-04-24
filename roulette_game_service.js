@@ -7,7 +7,6 @@ Multiplayer Roulette Game
 "use_strict";
 
 (function () {
-    "use strict";
 
     /* global require */
     const express = require("express");

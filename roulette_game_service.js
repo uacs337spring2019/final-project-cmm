@@ -19,6 +19,8 @@ Description: node.js service for chatit.js
     let currentSpinEnd;
     let gameInterval;
 
+    createNextSpin();
+
     app.use(function (req, res, next) {
         // Processes CORS errors
         res.header("Access-Control-Allow-Origin", "*");
@@ -67,9 +69,6 @@ Description: node.js service for chatit.js
 
     });
 
-    
-
-    createNextSpin();
 
     function gameTick() {
         let timeLeft = currentSpinEnd - new Date();
@@ -186,9 +185,8 @@ Description: node.js service for chatit.js
             if (name === currentWinningVal) {
                 balance += (amount * 36);
             }
-            console.log(balance);
-            return balance;
         }
+        return balance;
 
     }
     app.listen(process.env.PORT);

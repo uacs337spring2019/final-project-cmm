@@ -15,6 +15,10 @@ Description: node.js service for chatit.js
     const bodyParser = require('body-parser');
     const jsonParser = bodyParser.json();
 
+    let currentWinningVal;
+    let currentSpinEnd;
+    let gameInterval;
+
     app.use(function (req, res, next) {
         // Processes CORS errors
         res.header("Access-Control-Allow-Origin", "*");
@@ -61,9 +65,7 @@ Description: node.js service for chatit.js
 
     });
 
-    let currentWinningVal;
-    let currentSpinEnd;
-    let gameInterval;
+    
 
     createNextSpin();
 

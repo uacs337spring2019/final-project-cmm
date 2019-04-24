@@ -94,7 +94,6 @@
         if (response.status >= 200 && response.status < 300) {
             return response.text();
         } else {
-            document.getElementById("message-input").value = "Error";
             return Promise.reject(new Error(response.status + ": " + response.statusText));
         }
     }

@@ -44,9 +44,6 @@ Description: node.js service for chatit.js
             response.sendFile("/app/public/roulette_game.html");
         
         }
-
-
-
     });
 
     app.post('/', jsonParser, function (request, response) {
@@ -69,12 +66,11 @@ Description: node.js service for chatit.js
 
     });
 
-
     function gameTick() {
         let timeLeft = currentSpinEnd - new Date();
         if (timeLeft < 0) {
             // Current Spin has officially ended
-            console.log("Spin timer ended");
+            console.log("***Spin timer ended");
             clearInterval(gameInterval);
             console.log("Waiting 10 seconds for local spin animation");
             setTimeout(createNextSpin, 10000);
@@ -86,7 +82,7 @@ Description: node.js service for chatit.js
         currentWinningVal = getWinner();
         currentSpinEnd = new Date();
         currentSpinEnd.setSeconds(currentSpinEnd.getSeconds() + 15);
-        console.log("New Spin starting, winning val = " + currentWinningVal);
+        console.log("***New Spin starting, winning val = " + currentWinningVal);
         gameInterval = setInterval(gameTick, 1000);
     }
 
@@ -120,7 +116,6 @@ Description: node.js service for chatit.js
                     let redNums = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]
                     for (let j = 0; j < redNums.length; j++) {
                         if (redNums[j].toString() === currentWinningVal) {
-                            console.log("RED");
                             balance += (amount * 2);
                         }
                     }
@@ -130,7 +125,6 @@ Description: node.js service for chatit.js
                     for (let j = 0; j < blackNums.length; j++) {
                         if (blackNums[j].toString() === currentWinningVal) {
                             balance += (amount * 2);
-                            console.log("BLACK");
                         }
                     }
                     break;
@@ -174,7 +168,6 @@ Description: node.js service for chatit.js
                         balance += (amount * 3);
                     }
                     break;
-
                 default:
                     console.log("Unknown switch on category bets");
             }

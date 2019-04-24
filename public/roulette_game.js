@@ -6,12 +6,13 @@
     let activeCategoryBets = [];
     let timeLeft;
     let balance = 5;
+    let balanceChange;
     let spinTimer;
     let username;
 
     window.onload = function () {
         // 1) Show login page
-        
+
         // 2) Register all div clicks to record a bet
         let bettingDivs = document.getElementsByClassName("betting-square");
         for (let i = 0; i < bettingDivs.length; i++) {
@@ -23,20 +24,19 @@
         startSpin();
     }
 
-    function startSpin(){
+    function startSpin() {
         // send a GET to service asking for current spin
         let url = "https://roulette-extravaganza.herokuapp.com/?";
         url += "type=getSpin";
         fetch(url)
             .then(checkStatus)
-            .then(function(response){
+            .then(function (response) {
                 timeLeft = Number(response);
-                if(timeLeft < 0){
+                if (timeLeft < 0) {
                     // current spin already ended. Wait until new one
                     // time to wait = 12 seconds after spin end
                     setTimeout(startSpin, Math.abs(12000 + timeLeft));
-                }
-                else{
+                } else {
                     spinTimer = setInterval(spinTimerTick, 1000);
                 }
             });
@@ -89,58 +89,61 @@
                 console.log(receivingJSON.type);
                 activeCategoryBets = [];
                 activeSingleBets = [];
-                displaySpinVal(receivingJSON.spinVal, (receivingJSON.balance - balance));
+                spinVal = receivingJSON.spinVal;
+                balance = receivingJSON.balance;
+                balanceChange = receivingJSON.balance - balance;
+                displaySpinVal();
             });
 
     }
 
-    /**checks if response status is passable value
-      200-300 is acceptable, else it is not. return
-      Promise.reject error**/
-    function checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
-            return response.text();
+
+    let highlightInterval;
+    let highlightRuns = 0;
+
+    function displaySpinVal(spinVal, balanceChange) {
+        highlightInterval = setInterval(highlightTick, 200);
+    }
+
+    function highlightTick() {
+        if (highlightRuns >= 30) {
+            clearInterval(highlightInterval);
+            highlightRuns = 0;
+            highlightInterval = setInterval(singleValTick, 500);
+            displayBets(balanceChange);
         } else {
-            return Promise.reject(new Error(response.status + ": " + response.statusText));
+            let random = Math.floor(Math.random() * 37);
+            let numDivs = document.getElementsByClassName("single-bet");
+            for (let i = 0; i < numDivs.length; i++) {
+                numDivs[i].classList.remove("highlighted");
+            }
+            numDivs[random].classList.add("highlighted");
+            highlightRuns++;
         }
     }
 
-    function displaySpinVal(spinVal, balanceChange){
-        let numDivs = document.getElementsByClassName("single-bet");
-        
-        let runs = 0;
-        let interval = setInterval(function(){
-            if(runs === 30){
-                clearInterval(interval);
-                for(let i = 0; i < numDivs.length; i++){
-                    if(numDivs[i].children[0].innerHTML === spinVal){
+    function singleValTick() {
+        if (highlightRuns >= 10) {
+            clearInterval(highlightInterval);
+            highlightRuns = 0;
+        } else {
+            for (let i = 0; i < numDivs.length; i++) {
+                if (numDivs[i].children[0].innerHTML === spinVal) {
+                    if (numDivs[i].classList.contains("highlighted")) {
+                        numDivs[i].classList.remove("highlighted");
+                    } else {
                         numDivs[i].classList.add("highlighted");
                     }
-                    setTimeout(function(){
-                        numDivs[i].classList.remove("highlighted");
-                    }, 6000);
                 }
-                displayBets(balanceChange);
-
             }
-            else{
-                runs++;
-                let random = Math.floor(Math.random() * 37);
-                numDivs[random].classList.add("highlighted");
-                setTimeout(function(){
-                    numDivs[random].classList.remove("highlighted");
-                }, 200);
-            }
-
-        }, 200);
+        }
     }
-
 
     function updateTimer() {
         let spinDiv = document.getElementById("current-spin-div");
         let timerP = document.createElement("p");
         spinDiv.innerHTML = "";
-        if(timeLeft < 0){
+        if (timeLeft < 0) {
             timeLeft = 0;
         }
         if (Math.round(timeLeft / 1000) < 10) {
@@ -151,9 +154,6 @@
         spinDiv.appendChild(timerP);
 
     }
-
-    
-
 
     function recordBet() {
         if (balance <= 0) {
@@ -201,7 +201,7 @@
         let activeCategoryBetsDiv = document.getElementById("active-category-bets-div");
         let balanceDiv = document.getElementById("balance-div");
 
-        if(result){
+        if (result) {
             balance += result;
         }
         balanceDiv.innerHTML = "";
@@ -214,8 +214,7 @@
             let resultDiv = document.createElement("h4");
             if (result > 0) {
                 resultDiv.innerHTML = "You have won!    " + result + "$";
-            }
-            else{
+            } else {
                 resultDiv.innerHTML = "You did not win anything";
             }
             balanceDiv.appendChild(resultDiv);
@@ -243,6 +242,17 @@
             newP.innerHTML = "<strong>" + activeCategoryBets[i].name + "</strong>  $" + activeCategoryBets[i].amount;
             newDiv.appendChild(newP);
             activeCategoryBetsDiv.appendChild(newDiv);
+        }
+    }
+
+    /**checks if response status is passable value
+    200-300 is acceptable, else it is not. return
+    Promise.reject error**/
+    function checkStatus(response) {
+        if (response.status >= 200 && response.status < 300) {
+            return response.text();
+        } else {
+            return Promise.reject(new Error(response.status + ": " + response.statusText));
         }
     }
 })();

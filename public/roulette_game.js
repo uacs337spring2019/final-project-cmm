@@ -91,8 +91,9 @@
                 activeCategoryBets = [];
                 activeSingleBets = [];
                 spinVal = receivingJSON.spinVal;
-                balance = receivingJSON.balance;
                 balanceChange = receivingJSON.balance - balance;
+                balance = receivingJSON.balance;
+                
                 displaySpinVal();
             });
 

@@ -210,9 +210,6 @@
         let activeCategoryBetsDiv = document.getElementById("active-category-bets-div");
         let balanceDiv = document.getElementById("balance-div");
 
-        if (result) {
-            balance += result;
-        }
         balanceDiv.innerHTML = "";
         h2 = document.createElement("h2");
         h2.innerHTML = "$" + balance;

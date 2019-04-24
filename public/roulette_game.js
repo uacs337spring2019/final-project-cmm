@@ -7,6 +7,7 @@
     let timeLeft;
     let balance = 5;
     let balanceChange;
+    let spinVal;
     let spinTimer;
     let username;
 
@@ -101,7 +102,7 @@
     let highlightInterval;
     let highlightRuns = 0;
 
-    function displaySpinVal(spinVal, balanceChange) {
+    function displaySpinVal() {
         highlightInterval = setInterval(highlightTick, 200);
     }
 

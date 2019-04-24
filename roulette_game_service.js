@@ -120,7 +120,7 @@ Description: node.js service for chatit.js
                 case "RED":
                     let redNums = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]
                     for (let j = 0; j < redNums.length; j++) {
-                        if (redNums[j].toString() === numVal) {
+                        if (redNums[j].toString() === currentWinningVal) {
                             console.log("RED");
                             balance += (amount * 2);
                         }
@@ -129,7 +129,7 @@ Description: node.js service for chatit.js
                 case "BLACK":
                     let blackNums = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35];
                     for (let j = 0; j < blackNums.length; j++) {
-                        if (blackNums[j].toString() === numVal) {
+                        if (blackNums[j].toString() === currentWinningVal) {
                             balance += (amount * 2);
                             console.log("BLACK");
                         }

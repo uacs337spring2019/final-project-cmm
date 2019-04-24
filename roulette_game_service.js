@@ -69,11 +69,12 @@ Description: node.js service for chatit.js
             }));
         } else if (request.body.type === "login") {
             console.log("login received");
-            let balance = userLogin(request.body.userID);
+            let balance1 = userLogin(request.body.userID);
+            console.log("DB balance = " + balance1);
             response.send(JSON.stringify({
                 type: "login-response",
                 userID: request.body.userID,
-                balance: balance
+                balance: balance1
             }));
         }
 

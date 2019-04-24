@@ -81,12 +81,7 @@ Description: node.js service for chatit.js
             if(err) throw err;
             let leaderBoard = [];
             for(let i = 0; i < rows.length; i++){
-                if(i != rows.length - 1){
-                    leaderBoard.push(rows[i].userID + ": $" + rows[i].balance + "~~~");
-                }
-                else{
-                    leaderBoard.push(rows[i].userID + ": $" + rows[i].balance);
-                }
+                leaderBoard.push(rows[i].userID + ": $" + rows[i].balance);
             }
             console.log(leaderBoard.toString());
             response.send(leaderBoard.toString());

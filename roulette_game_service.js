@@ -81,13 +81,13 @@ Description: node.js service for chatit.js
     });
 
     function userLogin(userID) {
-        let balance;
+        let balance = -1;
         var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
         con.query(sql, function (err, rows, fields) {
             if (err) throw err;
             // if result is empty, userID does not exist in table
             if (!rows.length) {
-                createNewUser(userID);
+                balance = createNewUser(userID);
             } else {
                 console.log("username exists, check if logged in for user " + userID);
                                 
@@ -104,12 +104,15 @@ Description: node.js service for chatit.js
     }
 
     function createNewUser(userID){
+        let balance = 0;
         let sql = "INSERT INTO users (userID, loggedIn) ";
         sql += "VALUES ('" + userID + "', TRUE)";
-        con.query(sql, function(err,result){
+        con.query(sql, function(err,rows, fields){
             if(err) throw err;
             console.log("New user created for userID=" + userID);
+            balance = rows[0].balance;
         });
+        return balance;
     }
 
 

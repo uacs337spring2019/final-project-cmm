@@ -161,12 +161,12 @@
     let singleHighlightRuns = 0;
 
     function displaySpinVal() {
-        highlightInterval = setInterval(highlightTick, 200);
+        highlightInterval = setInterval(highlightTick, 100);
     }
 
     function highlightTick() {
         let numDivs = document.getElementsByClassName("single-bet");
-        if (highlightRuns >= 20) {
+        if (highlightRuns >= 40) {
             clearInterval(highlightInterval);
             for (let i = 0; i < numDivs.length; i++) {
                 numDivs[i].classList.remove("highlighted");

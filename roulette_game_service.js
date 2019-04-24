@@ -81,7 +81,7 @@ Description: node.js service for chatit.js
             if (err) throw err;
             // if result is empty, userID does not exist in table
             if (!rows.length) {
-                balance = createNewUser(userID);
+                balance = createNewUser(response, userID);
             } else {
                 console.log("username exists, check if logged in for user " + userID);
                                 
@@ -91,17 +91,16 @@ Description: node.js service for chatit.js
                 } else {
                     balance = Number(rows[0].balance);
                 }
-                
+                response.send(JSON.stringify({
+                    type: "login-response",
+                    userID: userID,
+                    balance: balance
+                }));
             }
-            response.send(JSON.stringify({
-                type: "login-response",
-                userID: userID,
-                balance: balance
-            }));
         });
     }
 
-    function createNewUser(userID){
+    function createNewUser(response, userID){
         let balance = 0;
         let sql = "INSERT INTO users (userID, loggedIn) ";
         sql += "VALUES ('" + userID + "', TRUE)";
@@ -109,8 +108,12 @@ Description: node.js service for chatit.js
             if(err) throw err;
             console.log("New user created for userID=" + userID);
             balance = rows[0].balance;
+            response.send(JSON.stringify({
+                type: "login-response",
+                userID: userID,
+                balance: balance
+            }));
         });
-        return balance;
     }
 
 

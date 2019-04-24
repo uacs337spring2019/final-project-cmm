@@ -156,6 +156,7 @@
 
 
     let highlightInterval;
+    let singleHighlightInterval;
     let highlightRuns = 0;
     let singleHighlightRuns = 0;
 
@@ -171,7 +172,7 @@
                 numDivs[i].classList.remove("highlighted");
             }
             highlightRuns = 0;
-            highlightInterval = setInterval(singleValTick, 500);
+            singleHighlightInterval = setInterval(singleValTick, 500);
             displayBets(balanceChange);
         } else {
             let random = Math.floor(Math.random() * 37);
@@ -187,7 +188,7 @@
     function singleValTick() {
         let numDivs = document.getElementsByClassName("single-bet");
         if (singleHighlightRuns >= 10) {
-            clearInterval(highlightInterval);
+            clearInterval(singleHighlightInterval);
             singleHighlightRuns = 0;
             for (let i = 0; i < numDivs.length; i++) {
                 numDivs[i].classList.remove("highlighted");

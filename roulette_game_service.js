@@ -88,13 +88,9 @@ Description: node.js service for chatit.js
                 createNewUser(userID);
             } else {
                 console.log("username exists, check if logged in for user " + userID);
-                console.log(rows[0]);
-                console.log(rows[0].userID);
-                console.log(rows[0].balance);
-                console.log(rows[0].loggedIn.toString());
-                
-                
+                                
                 if (rows[0].loggedIn.toString() === '1') {
+                    console.log("user is logged in");
                     return -1;
                 } else {
                     return rows[0].balance;

@@ -30,7 +30,7 @@
         fetch(url)
             .then(checkStatus)
             .then(function(response){
-                timeLeft = response;
+                timeLeft = Number(response);
                 console.log(response);
                 spinTimer = setInterval(spinTimerTick, 1000);
             });

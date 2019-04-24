@@ -104,7 +104,7 @@
         let url = "https://roulette-extravaganza.herokuapp.com/";
         let sendingJSON = {
             type: "bets",
-            userID: username,
+            userID: userID,
             balance: balance,
             singleNumberBets: activeSingleBets,
             categoryBets: activeCategoryBets

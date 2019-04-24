@@ -1,6 +1,7 @@
-"use strict";
+"use_strict";
 
 (function () {
+    "use strict";
 
     let activeSingleBets = [];
     let activeCategoryBets = [];
@@ -17,14 +18,15 @@
         for (let i = 0; i < bettingDivs.length; i++) {
             bettingDivs[i].onclick = recordBet;
         }
-        
+
         sendLogin();
         getLeaderBoard();
-    }
+    };
 
     window.onbeforeunload = sendLogout;
 
-    function getLeaderBoard(){
+    /**  */
+    function getLeaderBoard() {
         let url = "https://roulette-extravaganza.herokuapp.com/?";
         url += "type=getLeaderboard";
         fetch(url)
@@ -33,20 +35,20 @@
                 let responses = response.split(",");
                 let leaderboardDiv = document.getElementById("leaderboard-content-div");
                 leaderboardDiv.innerHTML = "";
-                for(let i = 0; i < responses.length; i++){
+                for (let i = 0; i < responses.length; i++) {
                     let newP = document.createElement("p");
                     newP.innerHTML = responses[i];
                     leaderboardDiv.appendChild(newP);
                 }
             });
     }
-
-    function sendLogin(){
+    /**  */
+    function sendLogin() {
         // Sends service userID, once valid, will call startSpin()
-        while(userID.length <= 0 || userID.indexOf(',') > -1){
+        while (userID.length <= 0 || userID.indexOf(',') > -1) {
             userID = window.prompt("Please enter your username");
         }
-        console.log(userID)
+        console.log(userID);
         let url = "https://roulette-extravaganza.herokuapp.com/";
         let sendingJSON = {
             type: "login",
@@ -66,20 +68,19 @@
                 let receivingJSON = JSON.parse(response);
                 console.log("balance = " + receivingJSON.balance);
                 balance = Number(receivingJSON.balance);
-                if(balance < 0){
+                if (balance < 0) {
                     window.alert("That username is already in use");
                     sendLogin();
-                }
-                else{
+                } else {
                     window.alert("Successful login for username: " + userID);
                     displayBets();
                     startSpin();
                 }
-                
-            });
-        
-    }
 
+            });
+
+    }
+    /**  */
     function startSpin() {
         // send a GET to service asking for current spin
         let url = "https://roulette-extravaganza.herokuapp.com/?";
@@ -115,11 +116,11 @@
         }
         updateTimer();
     }
-
+    /**  */
     function stopTimer() {
         clearInterval(spinTimer);
     }
-
+    /**  */
     function sendBets() {
         // Function will compile a json object to send to the server
         // Which contains username, balance, single number bets, category bets,
@@ -149,7 +150,7 @@
                 spinVal = receivingJSON.spinVal;
                 balanceChange = receivingJSON.balance - balance;
                 balance = receivingJSON.balance;
-                
+
                 displaySpinVal();
             });
     }
@@ -159,11 +160,11 @@
     let singleHighlightInterval;
     let highlightRuns = 0;
     let singleHighlightRuns = 0;
-
+    /**  */
     function displaySpinVal() {
         highlightInterval = setInterval(highlightTick, 100);
     }
-
+    /**  */
     function highlightTick() {
         let numDivs = document.getElementsByClassName("single-bet");
         if (highlightRuns >= 40) {
@@ -176,7 +177,7 @@
             displayBets(balanceChange);
         } else {
             let random = Math.floor(Math.random() * 37);
-            
+
             for (let i = 0; i < numDivs.length; i++) {
                 numDivs[i].classList.remove("highlighted");
             }
@@ -184,7 +185,7 @@
             highlightRuns++;
         }
     }
-
+    /**  */
     function singleValTick() {
         let numDivs = document.getElementsByClassName("single-bet");
         if (singleHighlightRuns >= 10) {
@@ -194,7 +195,7 @@
                 numDivs[i].classList.remove("highlighted");
             }
         } else {
-            
+
             for (let i = 0; i < numDivs.length; i++) {
                 if (numDivs[i].children[0].innerHTML === spinVal) {
                     if (numDivs[i].classList.contains("highlighted")) {
@@ -207,7 +208,7 @@
             singleHighlightRuns++;
         }
     }
-
+    /**  */
     function updateTimer() {
         let spinDiv = document.getElementById("current-spin-div");
         let timerP = document.createElement("p");
@@ -223,7 +224,7 @@
         spinDiv.appendChild(timerP);
 
     }
-
+    /**  */
     function recordBet() {
         if (balance <= 0) {
             return;
@@ -244,7 +245,7 @@
                 activeCategoryBets.push({
                     name: text,
                     amount: 1
-                })
+                });
             }
         } else {
             for (let i = 0; i < activeSingleBets.length; i++) {
@@ -257,13 +258,14 @@
                 activeSingleBets.push({
                     name: text,
                     amount: 1
-                })
+                });
             }
         }
         balance--;
         displayBets();
     }
-
+    /**  
+     * @param {number} result result of bet**/
     function displayBets(result) {
         let newDiv, newP, h3, h2;
         let activeSingleBetsDiv = document.getElementById("active-single-bets-div");
@@ -293,7 +295,8 @@
         for (let i = 0; i < activeSingleBets.length; i++) {
             newDiv = document.createElement("div");
             newP = document.createElement("p");
-            newP.innerHTML = "<strong>" + activeSingleBets[i].name + "</strong>  $" + activeSingleBets[i].amount;
+            newP.innerHTML = "<strong>" + activeSingleBets[i].name + 
+            "</strong>  $" + activeSingleBets[i].amount;
             newDiv.appendChild(newP);
             activeSingleBetsDiv.appendChild(newDiv);
         }
@@ -305,7 +308,8 @@
         for (let i = 0; i < activeCategoryBets.length; i++) {
             newDiv = document.createElement("div");
             newP = document.createElement("p");
-            newP.innerHTML = "<strong>" + activeCategoryBets[i].name + "</strong>  $" + activeCategoryBets[i].amount;
+            newP.innerHTML = "<strong>" + activeCategoryBets[i].name + 
+            "</strong>  $" + activeCategoryBets[i].amount;
             newDiv.appendChild(newP);
             activeCategoryBetsDiv.appendChild(newDiv);
         }
@@ -315,8 +319,8 @@
         logoutButton.onclick = sendLogout;
         document.getElementById("logout-div").appendChild(logoutButton);
     }
-
-    function sendLogout(){
+    /**  */
+    function sendLogout() {
         let url = "https://roulette-extravaganza.herokuapp.com/";
         let sendingJSON = {
             type: "logout",
@@ -334,12 +338,15 @@
             .then(checkStatus)
             .then(function (response) {
                 location.reload("https://roulette-extravaganza.herokuapp.com/");
+                console.log(response);
             });
     }
 
     /**checks if response status is passable value
     200-300 is acceptable, else it is not. return
-    Promise.reject error**/
+    Promise.reject error
+    @param {text} response for HTTP errors
+    @returns {promise}**/
     function checkStatus(response) {
         if (response.status >= 200 && response.status < 300) {
             return response.text();

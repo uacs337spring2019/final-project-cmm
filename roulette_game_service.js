@@ -1,16 +1,11 @@
-/*
-Programmer: Christopher Metz
-Course: CSC 337
-Assignment: Homework 8 - Chat-It
-Description: node.js service for chatit.js
-*/
+"use_strict";
 
-"use strict";
 (function () {
+    "use strict";
+
     /* global require */
     const express = require("express");
     const app = express();
-    let fs = require('fs');
     let mysql = require('mysql');
     let con = mysql.createConnection({
         host: "us-cdbr-iron-east-02.cleardb.net",
@@ -29,7 +24,7 @@ Description: node.js service for chatit.js
     createDBTable();
     createNextSpin();
 
-    app.use(function (req, res, next) {
+    app.use(function (res, next) {
         // Processes CORS errors
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Headers",
@@ -44,8 +39,7 @@ Description: node.js service for chatit.js
             if (request.query.type === "getSpin") {
                 console.log("GET : getSpin request received");
                 response.send("" + (currentSpinEnd - new Date()));
-            }
-            else if(request.query.type === "getLeaderboard"){
+            } else if (request.query.type === "getLeaderboard") {
                 console.log("GET leaderboard request");
                 getLeaderboard(response);
             }
@@ -64,54 +58,64 @@ Description: node.js service for chatit.js
 
         console.log("POST received");
         if (request.body.type === "bets") {
-            processBets(response, request.body.singleNumberBets, request.body.categoryBets, request.body.balance, request.body.userID);
+            processBets(response, request.body.singleNumberBets,
+                request.body.categoryBets, request.body.balance, request.body.userID);
         } else if (request.body.type === "login") {
             console.log("login received");
             userLogin(response, request.body.userID);
-        }
-        else if(request.body.type === "logout"){
-            userLogout(response,request.body.userID);
+        } else if (request.body.type === "logout") {
+            userLogout(response, request.body.userID);
         }
 
     });
 
-    function getLeaderboard(response){
-        var sql = "SELECT * FROM users WHERE loggedIn = 1";
-        con.query(sql, function(err,rows,fields){
-            if(err) throw err;
+    /**@param {number} response is response for leaderboard */
+    function getLeaderboard(response) {
+        let sql = "SELECT * FROM users WHERE loggedIn = 1";
+        con.query(sql, function (err, rows) {
+            if (err) {
+                throw err;
+            }
             let leaderBoard = [];
-            for(let i = 0; i < rows.length; i++){
+            for (let i = 0; i < rows.length; i++) {
                 leaderBoard.push(rows[i].userID + ": $" + rows[i].balance);
             }
             response.send(leaderBoard.toString());
-        })
+        });
     }
-    
 
-    function userLogout(response,userID){
+    /**
+     * @param {number} response is response to logout
+     * @param {text} userID is name of username
+     */
+    function userLogout(response, userID) {
         let sql = "UPDATE users ";
         sql += "SET loggedIn = FALSE ";
         sql += "WHERE userID = '" + userID + "'";
-        con.query(sql, function(err){
-            if(err) throw err;
+        con.query(sql, function (err) {
+            if (err) {
+                throw err;
+            }
             console.log("logout from " + userID);
             response.send(JSON.stringify({
                 type: "logout-response"
             }));
         });
     }
-
+    /** */
     function userLogin(response, userID) {
         let balance = -1;
-        var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
-        con.query(sql, function (err, rows, fields) {
-            if (err) throw err;
+        let sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
+        con.query(sql, function (err, rows) {
+            if (err) {
+                throw err;
+            }
             // if result is empty, userID does not exist in table
             if (!rows.length) {
                 balance = createNewUser(response, userID);
             } else {
                 console.log("username exists, check if logged in for user " + userID);
-                                
+
                 if (rows[0].loggedIn.toString() === '1') {
                     console.log("user is logged in");
                     balance = -1;
@@ -126,13 +130,15 @@ Description: node.js service for chatit.js
             }
         });
     }
-
-    function createNewUser(response, userID){
+    /** */
+    function createNewUser(response, userID) {
         let balance = 0;
         let sql = "INSERT INTO users (userID, loggedIn) ";
         sql += "VALUES ('" + userID + "', TRUE)";
-        con.query(sql, function(err,rows, fields){
-            if(err) throw err;
+        con.query(sql, function (err) {
+            if (err) {
+                throw err;
+            }
             console.log("New user created for userID=" + userID);
             balance = 5;
             response.send(JSON.stringify({
@@ -142,28 +148,34 @@ Description: node.js service for chatit.js
             }));
         });
     }
-
+    /** */
     function createDBTable() {
         con.connect(function (err) {
-            if (err) throw err;
+            if (err) {
+                throw err;
+            }
             let sql = "DROP TABLE users";
-            con.query(sql, function (err, result) {
-                if (err) throw err;
+            con.query(sql, function (err) {
+                if (err) {
+                    throw err;
+                }
                 console.log("Table dropped");
             });
             sql = "CREATE TABLE users (";
             sql += "userID VARCHAR(255) NOT NULL,";
             sql += "balance INT DEFAULT 5,";
-            sql += "loggedIn boolean DEFAULT false,"
-            sql += "betTimeout INT DEFAULT 0,"
+            sql += "loggedIn boolean DEFAULT false,";
+            sql += "betTimeout INT DEFAULT 0,";
             sql += "PRIMARY KEY (userID))";
-            con.query(sql, function (err, result) {
-                if (err) throw err;
+            con.query(sql, function (err) {
+                if (err) {
+                    throw err;
+                }
                 console.log("Table created");
-            })
+            });
         });
     }
-
+    /** */
     function gameTick() {
         let timeLeft = currentSpinEnd - new Date();
         if (timeLeft < 0) {
@@ -175,8 +187,7 @@ Description: node.js service for chatit.js
 
         }
     }
-
-
+    /** */
     function createNextSpin() {
         currentWinningVal = getWinner();
         currentSpinEnd = new Date();
@@ -184,15 +195,15 @@ Description: node.js service for chatit.js
         console.log("***New Spin starting, winning val = " + currentWinningVal);
         gameInterval = setInterval(gameTick, 1000);
     }
-
+    /** */
     function getWinner() {
-        var random = Math.floor(Math.random() * 38) - 1;
+        let random = Math.floor(Math.random() * 38) - 1;
         if (random == -1) {
             return "00";
         }
         return random.toString(10);
     }
-
+    /** */
     function processBets(response, activeSingleBets, activeCategoryBets, balance, userID) {
         let name, amount;
         let numVal = Number(currentWinningVal);
@@ -212,7 +223,7 @@ Description: node.js service for chatit.js
                     }
                     break;
                 case "RED":
-                    let redNums = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]
+                    let redNums = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36];
                     for (let j = 0; j < redNums.length; j++) {
                         if (redNums[j].toString() === currentWinningVal) {
                             balance += (amount * 2);
@@ -287,13 +298,13 @@ Description: node.js service for chatit.js
         updateBalance(userID, balance);
 
     }
-
-    function updateBalance(userID, balance){
+    /** */
+    function updateBalance(userID, balance) {
         let sql = "UPDATE users ";
         sql += "SET balance = " + balance + " ";
         sql += "WHERE userID = '" + userID + "'";
-        con.query(sql, function(err){
-            if(err) throw err;
+        con.query(sql, function (err) {
+            if (err) throw err;
             console.log("Balance updated in DB");
         });
     }

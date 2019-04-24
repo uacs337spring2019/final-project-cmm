@@ -51,6 +51,7 @@
                     sendLogin();
                 }
                 else{
+                    window.alert("Successful login for username: " + userID);
                     startSpin();
                 }
                 

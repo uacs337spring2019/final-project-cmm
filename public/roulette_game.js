@@ -129,7 +129,7 @@
 
     function singleValTick() {
         let numDivs = document.getElementsByClassName("single-bet");
-        if (highlightRuns >= 6) {
+        if (highlightRuns >= 10) {
             clearInterval(highlightInterval);
             highlightRuns = 0;
         } else {

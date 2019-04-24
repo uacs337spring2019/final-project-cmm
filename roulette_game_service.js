@@ -81,6 +81,7 @@ Description: node.js service for chatit.js
     });
 
     function userLogin(userID) {
+        let balance;
         var sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
         con.query(sql, function (err, rows, fields) {
             if (err) throw err;
@@ -92,12 +93,13 @@ Description: node.js service for chatit.js
                                 
                 if (rows[0].loggedIn.toString() === '1') {
                     console.log("user is logged in");
-                    return -1;
+                    balance = -1;
                 } else {
-                    return rows[0].balance;
+                    balance = rows[0].balance;
                 }
             }
         });
+        return balance;
     }
 
     function createNewUser(userID){

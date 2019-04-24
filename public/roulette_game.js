@@ -166,7 +166,7 @@
 
     function highlightTick() {
         let numDivs = document.getElementsByClassName("single-bet");
-        if (highlightRuns >= 30) {
+        if (highlightRuns >= 20) {
             clearInterval(highlightInterval);
             for (let i = 0; i < numDivs.length; i++) {
                 numDivs[i].classList.remove("highlighted");

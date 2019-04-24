@@ -45,6 +45,10 @@ Description: node.js service for chatit.js
                 console.log("GET : getSpin request received");
                 response.send("" + (currentSpinEnd - new Date()));
             }
+            else if(request.query.type === "getLeaderboard"){
+                console.log("GET leaderboard request");
+                getLeaderboard(response);
+            }
         } else {
             console.log("rendering HTML");
             app.use(express.static("public"));
@@ -70,6 +74,21 @@ Description: node.js service for chatit.js
         }
 
     });
+
+    function getLeaderboard(response){
+        var sql = "SELECT * FROM users WHERE loggedIn = 1";
+        con.query(sql, function(err,rows,fields){
+            if(err) throw err;
+            let leaderBoard = [];
+            for(let i = 0; i < rows.length; i++){
+                if(i != rows.length - 1){
+                    leaderBoard.push(rows[i].userID + ": $" + rows[i].balance + "~~~");
+                }
+            }
+            console.log(leaderBoard.toString());
+            response.send(leaderBoard.toString());
+        })
+    }
 
     function userLogout(response,userID){
         let sql = "UPDATE users ";

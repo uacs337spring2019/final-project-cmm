@@ -17,10 +17,29 @@
         for (let i = 0; i < bettingDivs.length; i++) {
             bettingDivs[i].onclick = recordBet;
         }
+        getLeaderBoard();
         sendLogin();
     }
 
     window.onbeforeunload = sendLogout;
+
+    function getLeaderBoard(){
+        let url = "https://roulette-extravaganza.herokuapp.com/?";
+        url += "type=getLeaderboard";
+        fetch(url)
+            .then(checkStatus)
+            .then(function (response) {
+                console.log(response);
+                let responses = response.split("~~~");
+                let leaderboardDiv = document.getElementById("leaderboard-content-div");
+                leaderboardDiv.innerHTML = "";
+                for(let i = 0; i < responses.length; i++){
+                    let newP = document.createElement("p");
+                    newP.innerHTML = responses[i];
+                    leaderboardDiv.appendChild(newP);
+                }
+            });
+    }
 
     function sendLogin(){
         // Sends service userID, once valid, will call startSpin()

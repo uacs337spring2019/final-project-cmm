@@ -30,7 +30,7 @@ Description: node.js service for chatit.js
     app.get('/', function (request, response) {
         // GET request to service
         console.log(request.query);
-        if (request.query.type === undefined) {
+        if (request.query === undefined) {
             console.log("rendering HTML");
             app.use(express.static("public"));
             response.sendFile("/app/public/roulette_game.html");

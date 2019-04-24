@@ -17,8 +17,9 @@
         for (let i = 0; i < bettingDivs.length; i++) {
             bettingDivs[i].onclick = recordBet;
         }
-        getLeaderBoard();
+        
         sendLogin();
+        getLeaderBoard();
     }
 
     window.onbeforeunload = sendLogout;

@@ -11,6 +11,13 @@ Description: node.js service for chatit.js
     const express = require("express");
     const app = express();
     let fs = require('fs');
+    let mysql = require('mysql');
+    let con = mysql.createConnection({
+        host: "us-cdbr-iron-east-02.cleardb.net/",
+        user: "b43dc6cf7d6820",
+        password: "2414e5ae",
+        database: "heroku_62979d63eba07b5"
+    });
 
     const bodyParser = require('body-parser');
     const jsonParser = bodyParser.json();
@@ -19,6 +26,7 @@ Description: node.js service for chatit.js
     let currentSpinEnd;
     let gameInterval;
 
+    createDBTable();
     createNextSpin();
 
     app.use(function (req, res, next) {
@@ -65,6 +73,21 @@ Description: node.js service for chatit.js
         }
 
     });
+
+    function createDBTable(){
+        con.connect(function(err){
+            if(err) throw err;
+            console.log("Connected to DB");
+            var sql = "CREATE TABLE [IF NOT EXISTS] users (";
+            sql += "userID VARCHAR(255) NOT NULL,";
+            sql += "balance INT DEFAULT 5,";
+            sql += "PRIMARY KEY (userID))";
+            con.query(sql, function(err, result){
+                if (err) throw err;
+                console.log("Table created");
+            })
+        })
+    }
 
     function gameTick() {
         let timeLeft = currentSpinEnd - new Date();

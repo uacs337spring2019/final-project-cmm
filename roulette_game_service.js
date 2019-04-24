@@ -84,6 +84,9 @@ Description: node.js service for chatit.js
                 if(i != rows.length - 1){
                     leaderBoard.push(rows[i].userID + ": $" + rows[i].balance + "~~~");
                 }
+                else{
+                    leaderBoard.push(rows[i].userID + ": $" + rows[i].balance
+                }
             }
             console.log(leaderBoard.toString());
             response.send(leaderBoard.toString());

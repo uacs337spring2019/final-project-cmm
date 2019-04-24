@@ -246,7 +246,7 @@ Description: node.js service for chatit.js
         }
         response.send(JSON.stringify({
             type: "bet-response",
-            userID: request.body.userID,
+            userID: userID,
             balance: balance,
             spinVal: currentWinningVal
         }));

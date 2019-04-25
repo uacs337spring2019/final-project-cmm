@@ -289,6 +289,7 @@ Multiplayer Roulette Game
             balanceResetButton.innerHTML = "Reset Balance to $5";
             balanceResetButton.onclick = function(){
                 balance = 5;
+                displayBets();
             };
             balanceDiv.appendChild(balanceResetButton);
         }

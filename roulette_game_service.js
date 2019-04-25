@@ -77,6 +77,7 @@ Multiplayer Roulette Game
     /**@param {number} response is response for leaderboard */
     function getLeaderboard(response) {
         let sql = "SELECT * FROM users WHERE loggedIn = 1";
+        con.connect();
         con.query(sql, function (err, rows) {
             if (err) {
                 throw err;
@@ -87,6 +88,7 @@ Multiplayer Roulette Game
             }
             response.send(leaderBoard.toString());
         });
+        con.end();
     }
 
     /**
@@ -94,6 +96,7 @@ Multiplayer Roulette Game
      * @param {text} userID is name of username
      */
     function userLogout(response, userID) {
+        con.connect();
         let sql = "UPDATE users ";
         sql += "SET loggedIn = FALSE ";
         sql += "WHERE userID = '" + userID + "'";
@@ -106,11 +109,13 @@ Multiplayer Roulette Game
                 type: "logout-response"
             }));
         });
+        con.end();
     }
     /** */
     function userLogin(response, userID) {
         let balance = -1;
         let sql = "SELECT * FROM users WHERE userID = '" + userID + "'";
+        con.connect();
         con.query(sql, function (err, rows) {
             if (err) {
                 throw err;
@@ -134,12 +139,18 @@ Multiplayer Roulette Game
                 }));
             }
         });
+        con.end();
     }
     /** */
     function createNewUser(response, userID) {
         let balance = 0;
         let sql = "INSERT INTO users (userID, loggedIn) ";
         sql += "VALUES ('" + userID + "', TRUE)";
+        con.connect(function (err) {
+            if (err) {
+                throw err;
+            }
+        });
         con.query(sql, function (err) {
             if (err) {
                 throw err;
@@ -152,6 +163,7 @@ Multiplayer Roulette Game
                 balance: balance
             }));
         });
+        con.end();
     }
     /** */
     function createDBTable() {
@@ -159,26 +171,27 @@ Multiplayer Roulette Game
             if (err) {
                 throw err;
             }
-            let sql = "DROP TABLE users";
-            con.query(sql, function (err) {
-                if (err) {
-                    throw err;
-                }
-                console.log("Table dropped");
-            });
-            sql = "CREATE TABLE users (";
-            sql += "userID VARCHAR(255) NOT NULL,";
-            sql += "balance INT DEFAULT 5,";
-            sql += "loggedIn boolean DEFAULT false,";
-            sql += "betTimeout INT DEFAULT 0,";
-            sql += "PRIMARY KEY (userID))";
-            con.query(sql, function (err) {
-                if (err) {
-                    throw err;
-                }
-                console.log("Table created");
-            });
         });
+        let sql = "DROP TABLE users";
+        con.query(sql, function (err) {
+            if (err) {
+                throw err;
+            }
+            console.log("Table dropped");
+        });
+        sql = "CREATE TABLE users (";
+        sql += "userID VARCHAR(255) NOT NULL,";
+        sql += "balance INT DEFAULT 5,";
+        sql += "loggedIn boolean DEFAULT false,";
+        sql += "betTimeout INT DEFAULT 0,";
+        sql += "PRIMARY KEY (userID))";
+        con.query(sql, function (err) {
+            if (err) {
+                throw err;
+            }
+            console.log("Table created");
+        });
+        con.end();
     }
     /** */
     function gameTick() {
@@ -305,6 +318,7 @@ Multiplayer Roulette Game
     }
     /** */
     function updateBalance(userID, balance) {
+        con.connect();
         let sql = "UPDATE users ";
         sql += "SET balance = " + balance + " ";
         sql += "WHERE userID = '" + userID + "'";
@@ -312,6 +326,7 @@ Multiplayer Roulette Game
             if (err) throw err;
             console.log("Balance updated in DB");
         });
+        con.end();
     }
 
     app.listen(process.env.PORT ||  3000);

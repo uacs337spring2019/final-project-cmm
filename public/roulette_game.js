@@ -56,6 +56,7 @@ Multiplayer Roulette Game
     /**  */
     function sendLogin() {
         // Sends service userID, once valid, will call startSpin()
+        userID = "";
         while (userID.length <= 0 || userID.indexOf(',') > -1 || userID.indexOf(';') > -1 || userID.toLowerCase().includes("drop")) {
             userID = window.prompt("Please enter your current or new username");
         }

@@ -283,10 +283,21 @@ Multiplayer Roulette Game
         let activeCategoryBetsDiv = document.getElementById("active-category-bets-div");
         let balanceDiv = document.getElementById("balance-div");
 
+        if(balance === 0){
+            let balanceResetButton = document.createElement("button");
+            balanceResetButton.innerHTML = "Reset Balance to $5";
+            balanceResetButton.onclick = function(){
+                balance = 5;
+            };
+            balanceDiv.appendChild(balanceResetButton);
+        }
+
         balanceDiv.innerHTML = "";
         h2 = document.createElement("h2");
         h2.innerHTML = "$" + balance;
         balanceDiv.appendChild(h2);
+
+
 
 
         if (result != null) {

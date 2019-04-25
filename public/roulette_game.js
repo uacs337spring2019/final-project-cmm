@@ -284,9 +284,7 @@ Multiplayer Roulette Game
         let balanceDiv = document.getElementById("balance-div");
         balanceDiv.innerHTML = "";
 
-        console.log(balance);
-        console.log(balance === 0);
-        if(balance === 0){
+        if(balance === 0 && activeSingleBets.length == 0 && activeCategoryBets == 0){
             let balanceResetButton = document.createElement("button");
             balanceResetButton.innerHTML = "Reset Balance to $5";
             balanceResetButton.onclick = function(){

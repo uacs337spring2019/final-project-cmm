@@ -243,7 +243,7 @@ Multiplayer Roulette Game
                     }
                     break;
                 case "EVEN":
-                    if (numVal % 2 === 0) {
+                    if (numVal > 0 && numVal % 2 === 0) {
                         balance += (amount * 2);
                     }
                     break;

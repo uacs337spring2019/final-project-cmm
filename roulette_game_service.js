@@ -99,7 +99,7 @@ Multiplayer Roulette Game
     function userLogout(response, userID) {
         let sql = "UPDATE users ";
         sql += "SET loggedIn = FALSE ";
-        sql += "WHERE userID = '" + userID + "'";
+        sql += "WHERE userID = '" + con.escape(userID) + "'";
         con.query(sql, function (err) {
             if (err) {
                 throw err;
@@ -143,7 +143,7 @@ Multiplayer Roulette Game
     function setUserLoggedIn(userID){
         let sql = "UPDATE users ";
         sql += "set loggedIn = TRUE ";
-        sql += "WHERE userID = '" + userID + "'";
+        sql += "WHERE userID = '" + con.escape(userID) + "'";
         con.query(sql, function (err) {
             if (err) {
                 throw err;
@@ -156,7 +156,7 @@ Multiplayer Roulette Game
     function createNewUser(response, userID) {
         let balance = 0;
         let sql = "INSERT INTO users (userID, loggedIn) ";
-        sql += "VALUES ('" + userID + "', TRUE)";
+        sql += "VALUES ('" + con.escape(userID) + "', TRUE)";
         con.query(sql, function (err) {
             if (err) {
                 throw err;
@@ -326,8 +326,8 @@ Multiplayer Roulette Game
     /** */
     function updateBalance(userID, balance) {
         let sql = "UPDATE users ";
-        sql += "SET balance = " + balance + " ";
-        sql += "WHERE userID = '" + userID + "'";
+        sql += "SET balance = " + con.escape(balance) + " ";
+        sql += "WHERE userID = '" + con.escape(userID) + "'";
         con.query(sql, function (err) {
             if (err) throw err;
             console.log("Balance updated in DB");

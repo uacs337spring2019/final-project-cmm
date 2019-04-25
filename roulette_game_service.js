@@ -199,6 +199,9 @@ Multiplayer Roulette Game
         currentSpinEnd.setSeconds(currentSpinEnd.getSeconds() + 15);
         console.log("***New Spin starting, winning val = " + currentWinningVal);
         gameInterval = setInterval(gameTick, 1000);
+        // This section tests querying DB JUST to keep it open
+        let sql = "SELECT * from users";
+        con.query(sql);
     }
     /** */
     function getWinner() {

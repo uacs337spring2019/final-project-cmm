@@ -282,6 +282,7 @@ Multiplayer Roulette Game
         let activeSingleBetsDiv = document.getElementById("active-single-bets-div");
         let activeCategoryBetsDiv = document.getElementById("active-category-bets-div");
         let balanceDiv = document.getElementById("balance-div");
+        balanceDiv.innerHTML = "";
 
         console.log(balance);
         console.log(balance === 0);
@@ -294,7 +295,7 @@ Multiplayer Roulette Game
             balanceDiv.appendChild(balanceResetButton);
         }
 
-        balanceDiv.innerHTML = "";
+        
         h2 = document.createElement("h2");
         h2.innerHTML = "$" + balance;
         balanceDiv.appendChild(h2);

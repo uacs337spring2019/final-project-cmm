@@ -125,6 +125,7 @@ Multiplayer Roulette Game
                     console.log("user is logged in");
                     balance = -1;
                 } else {
+                    setUserLoggedIn(userID);
                     balance = Number(rows[0].balance);
                 }
                 response.send(JSON.stringify({
@@ -135,6 +136,19 @@ Multiplayer Roulette Game
             }
         });
     }
+
+    function setUserLoggedIn(userID){
+        let sql = "UPDATE users ";
+        sql += "set loggedIn = TRUE ";
+        sql += "WHERE userID = '" + userID + "'";
+        con.query(sql, function (err) {
+            if (err) {
+                throw err;
+            }
+            console.log("Logged user in userID =" + userID);
+        });
+    }
+
     /** */
     function createNewUser(response, userID) {
         let balance = 0;

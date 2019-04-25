@@ -57,7 +57,7 @@ Multiplayer Roulette Game
     function sendLogin() {
         // Sends service userID, once valid, will call startSpin()
         while (userID.length <= 0 || userID.indexOf(',') > -1) {
-            userID = window.prompt("Please enter your username");
+            userID = window.prompt("Please enter your current or new username");
         }
         console.log(userID);
         let url = "https://roulette-extravaganza.herokuapp.com/";

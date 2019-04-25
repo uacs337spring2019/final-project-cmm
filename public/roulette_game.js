@@ -166,6 +166,27 @@ Multiplayer Roulette Game
             });
     }
 
+    function sendBalance(){
+        let url = "https://roulette-extravaganza.herokuapp.com/";
+        let sendingJSON = {
+            type: "balance-reset",
+            userID: userID,
+            balance: balance
+        };
+        fetch(url, {
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sendingJSON),
+        })
+        .then(checkStatus)
+        .then(function (response) {
+            console.log(response);
+        });
+    }
+
 
     let highlightInterval;
     let singleHighlightInterval;
@@ -289,6 +310,7 @@ Multiplayer Roulette Game
             balanceResetButton.innerHTML = "Reset Balance to $5";
             balanceResetButton.onclick = function(){
                 balance = 5;
+                sendBalance();
                 displayBets();
             };
             balanceDiv.appendChild(balanceResetButton);

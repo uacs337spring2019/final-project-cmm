@@ -70,6 +70,9 @@ Multiplayer Roulette Game
             userLogin(response, request.body.userID);
         } else if (request.body.type === "logout") {
             userLogout(response, request.body.userID);
+        } else if(request.body.type === "balance-reset"){
+            updateBalance(request.body.userID, request.body.balance);
+            response.send("Balance Updated");
         }
 
     });
